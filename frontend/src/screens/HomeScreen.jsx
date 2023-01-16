@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
 import Loader from '../components/Loader';
 
-// change
+// I am in shopping cart
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
