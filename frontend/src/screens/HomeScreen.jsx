@@ -3,22 +3,28 @@ import { Row, Col } from 'react-bootstrap';
 import Product from '../components/Product';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
+import Loader from '../components/Loader';
+
+// change
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
-  const { loading, products, error} = useSelector(
-    (state) => state.productList 
+  const { loading, products, error } = useSelector(
+    (state) => state.productList
   );
-    console.log(error)
+  console.log(error);
   useEffect(() => {
     dispatch(listProducts());
   }, [dispatch]);
 
+  const date =  new Date().parse();
+  console.log(date);
+  
   return (
     <>
       <h1>Latest Products</h1>
       {loading ? (
-        <h2>Loading...</h2>
+        <Loader />
       ) : error ? (
         <h3>{error}</h3>
       ) : (
