@@ -14,7 +14,7 @@ const ProductScreen = () => {
       setProduct(data)
     };
     fetchProduct()
-  }, []);
+  }, [currentProductId]);
   return (
     <>
       <Link to="/" className="btn btn-light">
@@ -63,7 +63,7 @@ const ProductScreen = () => {
                   <Button
                     className="btn block"
                     type="button"
-                    disabled={product.countInStock == 0}
+                    disabled={product.countInStock === 0}
                   >
                     Add to Cart
                   </Button>
