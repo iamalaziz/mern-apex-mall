@@ -4,6 +4,17 @@ main {
 a {
   text-decoration: none;
 }
+a:hover {
+  text-decoration: underline;
+}
+h1 {
+  font-size: 1.8rem;
+  padding: 1rem 0;
+}
+h2 {
+  font-size: 1.4rem;
+  padding: .5rem 0;
+}
 h3 {
   padding: 1rem 0;
 }

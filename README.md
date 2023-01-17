@@ -44,3 +44,4 @@ Then we can use _import_ and _export_ rather than _require_ syntax.
 3. STORE - add reducer to the store
 4. ACTIONS - work on actions to perform a certain functionality
 ```
+8. getState - is used to dispatch the state of all reducers
