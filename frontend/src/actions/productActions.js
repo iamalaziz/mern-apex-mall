@@ -3,6 +3,9 @@ import {
   PRODUCTS_LIST_FAILURE,
   PRODUCTS_LIST_SUCCESS,
   PRODUCTS_LIST_REQUEST,
+  PRODUCTS_DETAILS_REQUEST,
+  PRODUCTS_DETAILS_SUCCESS,
+  PRODUCTS_DETAILS_FAILURE,
 } from '../constants/productConstants';
 
 export const listProducts = () => async (dispatch) => {
@@ -14,6 +17,23 @@ export const listProducts = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PRODUCTS_LIST_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const productDetail = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCTS_DETAILS_REQUEST });
+
+    const { data } = await axios.get(`/api/products/${id}`);
+    dispatch({ type: PRODUCTS_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: PRODUCTS_DETAILS_FAILURE,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

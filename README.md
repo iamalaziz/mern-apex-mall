@@ -37,3 +37,10 @@ Then we can use _import_ and _export_ rather than _require_ syntax.
 211.210.172.62/32
 
 6. Compass - GUI(graphical user interface) for MongoDB
+7. Redux Implementation Flow
+```
+1. REDUCERS - create reducers you need
+2. CONSTANTS - to use type variable without quotes everytime we need, we include them in constants
+3. STORE - add reducer to the store
+4. ACTIONS - work on actions to perform a certain functionality
+```
