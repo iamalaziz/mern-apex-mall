@@ -34,8 +34,9 @@ userSchema.pre('save', async function(next) {
   }
 
   const salt = await bcript.genSalt(10)
-  this.password = await bcript.hash(this.password, salt)
+  this.password = bcript.hash(this.password, salt)
 })
+
 const User = mongoose.model('User', userSchema)
 
 export default User
