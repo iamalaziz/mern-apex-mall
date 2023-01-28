@@ -1,18 +1,25 @@
 import { useEffect } from 'react';
 import { Col, Row, ListGroup, Image, Card, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import CheckoutSteps from '../components/CheckoutSteps';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getOrderById } from '../actions/orderActions';
 
 const OrderScreen = () => {
-  const cart = useSelector((state) => state.cart);
   const { order, error, loading } = useSelector((state) => state.orderDetails);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id: orderId } = useParams();
+
+  if (!loading) {
+    const addDecimals = (n) => {
+      return (Math.round(n * 100) / 100).toFixed(2);
+    };
+    order.itemsPrice = addDecimals(
+      order.orderItems.reduce((acc, curr) => acc + +curr.qty * +curr.price, 0)
+    );
+  }
 
   useEffect(() => {
     dispatch(getOrderById(orderId));
@@ -31,11 +38,19 @@ const OrderScreen = () => {
             <ListGroup.Item>
               <h2>Shipping</h2>
               <p>
+                <strong>Name: </strong> {order.user.name}
+              </p>
+              <p>
+                <strong>Email: </strong>{' '}
+                <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
+              </p>
+              <p>
                 <strong>Address:</strong>
                 {order.shippingAddress.address}, {order.shippingAddress.city}
                 {order.shippingAddress.postalCode},{' '}
                 {order.shippingAddress.country}
               </p>
+              {order.isDelivered ? <Message variant='success'>Delivered</Message> : <Message variant='danger'>Not Delivered</Message>}
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -44,6 +59,7 @@ const OrderScreen = () => {
                 <strong>Method: </strong>
                 {order.paymentMethod}
               </p>
+              {order.isPaid ? <Message variant='success'>Paid</Message> : <Message variant='danger'>Not Paid</Message>}
             </ListGroup.Item>
 
             <ListGroup.Item>
