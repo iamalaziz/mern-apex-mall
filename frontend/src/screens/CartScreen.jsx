@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import Message from '../components/Message';
-import Loader from '../components/Loader';
 import { useParams, useLocation, useNavigate, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import {
