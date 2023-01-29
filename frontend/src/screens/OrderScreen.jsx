@@ -22,8 +22,8 @@ const OrderScreen = () => {
   }
 
   useEffect(() => {
-    dispatch(getOrderById(orderId));
-  }, []);
+    if (!order || order._id !== orderId) dispatch(getOrderById(orderId));
+  }, [order, orderId]);
 
   return loading ? (
     <Loader />
@@ -50,7 +50,11 @@ const OrderScreen = () => {
                 {order.shippingAddress.postalCode},{' '}
                 {order.shippingAddress.country}
               </p>
-              {order.isDelivered ? <Message variant='success'>Delivered</Message> : <Message variant='danger'>Not Delivered</Message>}
+              {order.isDelivered ? (
+                <Message variant="success">Delivered</Message>
+              ) : (
+                <Message variant="danger">Not Delivered</Message>
+              )}
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -59,7 +63,11 @@ const OrderScreen = () => {
                 <strong>Method: </strong>
                 {order.paymentMethod}
               </p>
-              {order.isPaid ? <Message variant='success'>Paid</Message> : <Message variant='danger'>Not Paid</Message>}
+              {order.isPaid ? (
+                <Message variant="success">Paid</Message>
+              ) : (
+                <Message variant="danger">Not Paid</Message>
+              )}
             </ListGroup.Item>
 
             <ListGroup.Item>
