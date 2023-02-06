@@ -2,13 +2,16 @@ import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../actions/userActions';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.userLogin);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
+    navigate('/');
   };
 
   return (
