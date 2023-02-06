@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Col, Row, ListGroup, Image, Card, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { PayPalButton } from 'react-paypal-button-v2';
-
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -40,6 +39,7 @@ const OrderScreen = () => {
       };
       document.body.appendChild(script);
     };
+    
     if (!order || successPay) {
       dispatch(getOrderById(orderId));
     } else if (!order.isPaid) {
