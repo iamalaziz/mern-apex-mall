@@ -11,7 +11,7 @@ import {
   Form,
 } from 'react-bootstrap';
 import Rating from '../components/Rating';
-import { productDetail } from '../actions/productActions';
+import { listProductDetails } from '../actions/productActions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -22,12 +22,12 @@ const ProductScreen = () => {
   const navigate = useNavigate();
 
   const { loading, error, product } = useSelector(
-    (state) => state.productDetail
+    (state) => state.productDetails
   );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(productDetail(currentProductId));
+    dispatch(listProductDetails(currentProductId));
   }, [dispatch, currentProductId]);
 
   const addToCartHandler = () => {

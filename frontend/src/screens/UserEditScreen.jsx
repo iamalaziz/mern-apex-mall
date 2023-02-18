@@ -9,7 +9,7 @@ import { getUserDetails, updateUser } from '../actions/userActions';
 import { USER_UPDATE_RESET } from '../constants/userConstants';
 import { useParams } from 'react-router-dom';
 
-const UserEditScreen = ({ match, history }) => {
+const UserEditScreen = () => {
   const { id: userId } = useParams();
   const navigate = useNavigate();
 

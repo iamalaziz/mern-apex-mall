@@ -11,12 +11,12 @@ import {
   deleteProduct,
   createProduct,
 } from '../actions/productActions';
-// import { PRODUCT_CREATE_RESET } from '../constants/productConstants';
+import { PRODUCT_CREATE_RESET } from '../constants/productConstants';
 
 const ProductListScreen = () => {
   // const pageNumber = match.params.pageNumber || 1;
   const pageNumber = 1;
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { loading, error, products, page, pages } = useSelector(
@@ -30,32 +30,32 @@ const ProductListScreen = () => {
     success: successDelete,
   } = useSelector((state) => state.productDelete);
 
-  // const {
-  //   loading: loadingCreate,
-  //   error: errorCreate,
-  //   success: successCreate,
-  //   product: createdProduct,
-  // } = useSelector((state) => state.productCreate);
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    product: createdProduct,
+  } = useSelector((state) => state.productCreate);
 
   useEffect(() => {
-    // dispatch({ type: PRODUCT_CREATE_RESET });
+    dispatch({ type: PRODUCT_CREATE_RESET });
 
     if (!userInfo || !userInfo.isAdmin) {
       navigate('/login');
     }
-    dispatch(listProducts('', pageNumber))
-    // if (successCreate) {
-    //   navigate(`/admin/product/${createdProduct._id}/edit`);
-    // } else {
-    //   dispatch(listProducts('', pageNumber));
-    // }
+    dispatch(listProducts('', pageNumber));
+    if (successCreate) {
+      navigate(`/admin/product/${createdProduct._id}/edit`);
+    } else {
+      dispatch(listProducts('', pageNumber));
+    }
   }, [
     dispatch,
     navigate,
     userInfo,
     successDelete,
-    // successCreate,
-    // createdProduct,
+    successCreate,
+    createdProduct,
     pageNumber,
   ]);
 
@@ -66,8 +66,7 @@ const ProductListScreen = () => {
   };
 
   const createProductHandler = () => {
-    // dispatch(createProduct());
-    console.log('create');
+    dispatch(createProduct());
   };
 
   return (
@@ -76,16 +75,16 @@ const ProductListScreen = () => {
         <Col>
           <h1>Products</h1>
         </Col>
-        <Col className="text-right">
-          <Button className="my-3" onClick={createProductHandler}>
+        <Col>
+          <Button className="btn my-3 float-end" onClick={createProductHandler}>
             <i className="fas fa-plus"></i> Create Product
           </Button>
         </Col>
       </Row>
       {loadingDelete && <Loader />}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
-      {/* {loadingCreate && <Loader />} */}
-      {/* {errorCreate && <Message variant="danger">{errorCreate}</Message>} */}
+      {loadingCreate && <Loader />}
+      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (
