@@ -24,17 +24,13 @@ const ProductEditScreen = () => {
 
   const dispatch = useDispatch();
 
-  const { loading, error, product } = useSelector(
-    (state) => state.productDetails
-  );
+  const { loading, error, product } = useSelector((state) => state.productDetails);
 
   const {
     loading: loadingUpdate,
     error: errorUpdate,
     success: successUpdate,
   } = useSelector((state) => state.productUpdate);
-
-  console.log(product)
   
   useEffect(() => {
     if (successUpdate) {
@@ -53,7 +49,7 @@ const ProductEditScreen = () => {
         setDescription(product.description);
       }
     }
-  }, [dispatch, navigate, productId]);
+  }, [dispatch, navigate, productId, successUpdate, product.name]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
