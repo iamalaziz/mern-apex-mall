@@ -24,15 +24,18 @@ const ProductEditScreen = () => {
 
   const dispatch = useDispatch();
 
-  const { loading, error, product } = useSelector((state) => state.productDetails);
+  const { loading, error, product } = useSelector(
+    (state) => state.productDetails
+  );
 
-  const productUpdate = useSelector((state) => state.productUpdate);
   const {
     loading: loadingUpdate,
     error: errorUpdate,
     success: successUpdate,
-  } = productUpdate;
+  } = useSelector((state) => state.productUpdate);
 
+  console.log(product)
+  
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
@@ -40,8 +43,7 @@ const ProductEditScreen = () => {
     } else {
       if (!product.name || product._id !== productId) {
         dispatch(listProductDetails(productId));
-      } 
-      else {
+      } else {
         setName(product.name);
         setPrice(product.price);
         setImage(product.image);
@@ -49,9 +51,9 @@ const ProductEditScreen = () => {
         setCategory(product.category);
         setCountInStock(product.countInStock);
         setDescription(product.description);
+      }
     }
-    }
-  }, [dispatch, navigate, productId, successUpdate]);
+  }, [dispatch, navigate, productId]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
@@ -135,13 +137,13 @@ const ProductEditScreen = () => {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
               ></Form.Control>
-              {/* <Form.File
-                id='image-file'
-                label='Choose File'
-                custom
+              <input
+                type="file"
+                id="image-file"
+                label="Choose File"
                 onChange={uploadFileHandler}
-              ></Form.File>
-              {uploading && <Loader />} */}
+              />
+              {uploading && <Loader />}
             </Form.Group>
 
             <Form.Group controlId="brand">

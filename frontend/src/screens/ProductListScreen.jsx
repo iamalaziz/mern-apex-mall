@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import Paginate from '../components/Paginate';
+
 import {
   listProducts,
   deleteProduct,
@@ -15,11 +15,11 @@ import { PRODUCT_CREATE_RESET } from '../constants/productConstants';
 
 const ProductListScreen = () => {
   // const pageNumber = match.params.pageNumber || 1;
-  const pageNumber = 1;
+  // const pageNumber = 1; 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { loading, error, products, page, pages } = useSelector(
+  const { loading, error, products } = useSelector(
     (state) => state.productList
   );
   const { userInfo } = useSelector((state) => state.userLogin);
@@ -43,11 +43,11 @@ const ProductListScreen = () => {
     if (!userInfo || !userInfo.isAdmin) {
       navigate('/login');
     }
-    dispatch(listProducts('', pageNumber));
+    dispatch(listProducts());
     if (successCreate) {
       navigate(`/admin/product/${createdProduct._id}/edit`);
     } else {
-      dispatch(listProducts('', pageNumber));
+      dispatch(listProducts());
     }
   }, [
     dispatch,
@@ -56,7 +56,6 @@ const ProductListScreen = () => {
     successDelete,
     successCreate,
     createdProduct,
-    pageNumber,
   ]);
 
   const deleteHandler = (id) => {
@@ -128,7 +127,6 @@ const ProductListScreen = () => {
               ))}
             </tbody>
           </Table>
-          <Paginate pages={pages} page={page} isAdmin={true} />
         </>
       )}
     </>
