@@ -49,7 +49,7 @@ const ProductEditScreen = () => {
         setDescription(product.description);
       }
     }
-  }, [dispatch, navigate, productId, successUpdate, product.name]);
+  }, [dispatch, navigate, productId, successUpdate, product._id]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
