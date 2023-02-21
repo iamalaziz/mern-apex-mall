@@ -1,23 +1,37 @@
 import { useEffect, useState } from 'react';
-import { Col, Row, ListGroup, Image, Card } from 'react-bootstrap';
+import { Col, Row, ListGroup, Image, Card, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { PayPalButton } from 'react-paypal-button-v2';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { getOrderDetails, payOrder } from '../actions/orderActions';
+import {
+  deliverOrder,
+  getOrderDetails,
+  payOrder,
+} from '../actions/orderActions';
 import axios from 'axios';
+import {
+  ORDER_DELIVER_RESET,
+  ORDER_PAY_RESET,
+} from '../constants/orderConstants';
 
 const OrderScreen = () => {
   const { order, error, loading } = useSelector((state) => state.orderDetails);
+
   const { loading: loadingPay, success: successPay } = useSelector(
     (state) => state.orderPay
   );
+  const { loading: loadingDeliver, success: successDeliver } = useSelector(
+    (state) => state.orderDeliver
+  );
+
   const { userInfo } = useSelector((state) => state.userLogin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id: orderId } = useParams();
   const [sdkReady, setSdkReady] = useState(true);
+
   if (!loading) {
     const addDecimals = (n) => {
       return (Math.round(n * 100) / 100).toFixed(2);
@@ -43,7 +57,9 @@ const OrderScreen = () => {
       document.body.appendChild(script);
     };
 
-    if (!order || successPay) {
+    if (!order || successPay || successDeliver) {
+      dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(getOrderDetails(orderId));
     } else if (!order.isPaid) {
       if (!window.paypal) {
@@ -59,6 +75,9 @@ const OrderScreen = () => {
     dispatch(payOrder(orderId, paymentResult));
   };
 
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order));
+  };
   return loading ? (
     <Loader />
   ) : error ? (
@@ -98,7 +117,9 @@ const OrderScreen = () => {
                 {order.paymentMethod}
               </p>
               {order.isPaid ? (
-                <Message variant="success">Paid on {order.paidAt.substring(0, 10)}</Message>
+                <Message variant="success">
+                  Paid on {order.paidAt.substring(0, 10)}
+                </Message>
               ) : (
                 <Message variant="danger">Not Paid</Message>
               )}
@@ -181,6 +202,18 @@ const OrderScreen = () => {
                       onSuccess={successPaymentHandler}
                     ></PayPalButton>
                   )}
+                </ListGroup.Item>
+              )}
+
+              {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <ListGroup.Item className='d-grid'>
+                  <Button
+                    type="button"
+                    onClick={deliverHandler}
+                    className="w-full btn btn-block"
+                  >
+                    Mark as Delivered
+                  </Button>
                 </ListGroup.Item>
               )}
             </ListGroup>
