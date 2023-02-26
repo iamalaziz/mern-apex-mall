@@ -18,6 +18,9 @@ import Message from '../components/Message';
 
 const ProductScreen = () => {
   const [qty, setQty] = useState(1);
+  const [review, setReview] = useState('');
+  const [comment, setComment] = useState('');
+
   const { id: currentProductId } = useParams();
   const navigate = useNavigate();
 
