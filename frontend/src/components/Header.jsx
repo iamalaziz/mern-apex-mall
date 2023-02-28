@@ -3,6 +3,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../actions/userActions';
 import { useNavigate } from 'react-router-dom';
+import SearchBox from './SearchBox';
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.userLogin);
@@ -21,6 +22,7 @@ const Header = () => {
           <LinkContainer to="/">
             <Navbar.Brand>ApexMall</Navbar.Brand>
           </LinkContainer>
+          <SearchBox />
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto">

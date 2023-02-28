@@ -18,6 +18,7 @@ import ProductListScreen from './screens/ProductListScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
 import OrderListScreen from './screens/OrderListScreen';
 
+
 function App() {
   return (
     <Router>
@@ -46,6 +47,7 @@ function App() {
               element={<ProductEditScreen />}
             />
             <Route path="/admin/orderlist" element={<OrderListScreen />} />
+            <Route path="/search/:keyword" element={<HomeScreen />} />
             <Route exact path="/" element={<HomeScreen />} />
           </Routes>
         </Container>
