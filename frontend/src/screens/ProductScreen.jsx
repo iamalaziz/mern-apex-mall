@@ -50,10 +50,10 @@ const ProductScreen = () => {
     navigate(`/cart/${currentProductId}?qty=${qty}`);
   };
 
-  const submitHandler = (e) => {
+  function submitHandler(e) {
     e.preventDefault();
     dispatch(createProductReview(currentProductId, { rating, comment }));
-  };
+  }
   return (
     <>
       <Link to="/" className="btn btn-ligh my-3">
