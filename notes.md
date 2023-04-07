@@ -44,6 +44,16 @@ Then we can use _import_ and _export_ rather than _require_ syntax.
 3. STORE - add reducer to the store
 4. ACTIONS - work on actions to perform a certain functionality
 ```
+
 8. getState - is used to dispatch the state of all reducers
 9. JWT - JSON Web Tokens
 > npm i jsonwebtoken
+
+
+.env
+
+NODE_ENV = development
+PORT = 5000
+MONGODB_URI = mongodb+srv://zero0:zero0@cluster0.ral1001.mongodb.net/apexmall?retryWrites=true&w=majority
+JWT_SECRET = abc123
+PAYPAL_CLIENT_ID = AeTNJfv-pi90NOFKlAH8TH-q-s7I_LcquT-NFJBv3eWY6y1bZ_P5e9Lu45hHaO5I0DcCZIY6hv3V79Nz
