@@ -1,4 +1,3 @@
-import e from 'express';
 import React from 'react';
 import { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
@@ -9,7 +8,7 @@ const SearchBox = () => {
 
   const navigate = useNavigate();
 
-  const submitHandler = () => {
+  const submitHandler = (e) => {
     e.preventDefault();
     if (keyword.trim()) {
       navigate(`/search/${keyword}`);
@@ -18,7 +17,7 @@ const SearchBox = () => {
     }
   };
   return (
-    <Form onSubmit={submitHandler} inline>
+    <Form onSubmit={submitHandler}>
       <Form.Control
         type="text"
         name="q"
