@@ -9,7 +9,6 @@ const Header = () => {
   const { userInfo } = useSelector((state) => state.userLogin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const handleLogout = () => {
     dispatch(logout());
     navigate('/');
@@ -22,9 +21,9 @@ const Header = () => {
           <LinkContainer to="/">
             <Navbar.Brand>ApexMall</Navbar.Brand>
           </LinkContainer>
-          <SearchBox />
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
+            <SearchBox />
             <Nav className="ms-auto">
               <LinkContainer to="/cart">
                 <Nav.Link>

@@ -18,7 +18,6 @@ import ProductListScreen from './screens/ProductListScreen';
 import ProductEditScreen from './screens/ProductEditScreen';
 import OrderListScreen from './screens/OrderListScreen';
 
-
 function App() {
   return (
     <Router>
@@ -26,6 +25,7 @@ function App() {
       <main className="py-3">
         <Container>
           <Routes>
+            <Route exact path="/" element={<HomeScreen />} />
             <Route path="/register" element={<RegisterScreen />} />
             <Route path="/login" element={<LoginScreen />} />
             <Route path="/shipping" element={<ShippingScreen />} />
@@ -48,7 +48,6 @@ function App() {
             />
             <Route path="/admin/orderlist" element={<OrderListScreen />} />
             <Route path="/search/:keyword" element={<HomeScreen />} />
-            <Route exact path="/" element={<HomeScreen />} />
           </Routes>
         </Container>
       </main>
