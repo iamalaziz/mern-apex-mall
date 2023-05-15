@@ -9,7 +9,7 @@ const getProducts = asyncHandler(async (req, res) => {
   const keyword = req.query.keyword
     ? { name: { $regex: req.query.keyword }, $options: 'i' }
     : {};
-  console.log(keyword)
+  // console.log(keyword)
   const products = await Product.find({ ...keyword });
   res.json(products);
 });
