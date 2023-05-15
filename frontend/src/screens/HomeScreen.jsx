@@ -9,7 +9,8 @@ import { useParams } from 'react-router-dom';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
-  const keyword = useParams();
+  const {keyword} = useParams();
+
   const { loading, products, error } = useSelector(
     (state) => state.productList
   );
