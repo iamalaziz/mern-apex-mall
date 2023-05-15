@@ -5,6 +5,7 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
+    "build": "webpack --config webpack.config.js",
     "start": "node backend/server",
     "server": "nodemon backend/server",
     "client": "npm start --prefix frontend",
@@ -36,6 +37,8 @@
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "webpack": "^5.82.1",
+    "webpack-cli": "^5.1.1"
   }
 }
