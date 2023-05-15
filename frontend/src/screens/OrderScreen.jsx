@@ -22,7 +22,7 @@ const OrderScreen = () => {
   const { loading: loadingPay, success: successPay } = useSelector(
     (state) => state.orderPay
   );
-  const { loading: loadingDeliver, success: successDeliver } = useSelector(
+  const { success: successDeliver } = useSelector(
     (state) => state.orderDeliver
   );
 
@@ -68,6 +68,7 @@ const OrderScreen = () => {
         setSdkReady(true);
       }
     }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, orderId, successPay]);
 
   const successPaymentHandler = (paymentResult) => {

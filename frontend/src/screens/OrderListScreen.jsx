@@ -19,7 +19,7 @@ const OrderListScreen = () => {
     } else {
       navigate('/login');
     }
-  }, [userInfo]);
+  }, [userInfo, dispatch, navigate]);
 
   return (
     <>

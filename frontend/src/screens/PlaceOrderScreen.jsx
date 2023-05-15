@@ -32,6 +32,7 @@ const PlaceOrderScreen = () => {
     if (success) {
       navigate(`/order/${order._id}`);
     }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navigate, success]);
   
   const placeOrderHandler = () => {

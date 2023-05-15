@@ -49,6 +49,7 @@ const ProductEditScreen = () => {
         setDescription(product.description);
       }
     }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, navigate, productId, successUpdate, product._id]);
 
   const uploadFileHandler = async (e) => {
