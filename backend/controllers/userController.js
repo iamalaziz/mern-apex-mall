@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import { generateToken } from '../utils/generateToken.js';
+import sendOTPVerificationEmail from './emailController.js';
 
 // @desc    Auth User & get token
 // @route   POST /api/users/login
@@ -24,8 +25,8 @@ export const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Register User
-// @route   POST /api/users/login
+// @desc    Register a new User
+// @route   POST /api/users/
 // @access  Public
 
 export const registerUser = asyncHandler(async (req, res) => {
@@ -41,14 +42,17 @@ export const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    verified: false,
   });
 
   if (user) {
+    await sendOTPVerificationEmail({ _id: user._id, email: user.email }, res);
     res.status(201).send({
       _id: user._id,
       email: user.email,
       name: user.name,
       isAdmin: user.isAdmin,
+      verified: false,
       token: generateToken(user._id),
     });
   } else {
@@ -138,13 +142,12 @@ export const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id).select('-password');
 
   if (user) {
-    res.json(user)
+    res.json(user);
   } else {
     res.status(404);
     throw new Error('User not found');
   }
 });
-
 
 // @desc    Update User
 // @route   GET /api/users/:id
@@ -156,7 +159,7 @@ export const updateUser = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
-    user.isAdmin = req.body.isAdmin
+    user.isAdmin = req.body.isAdmin;
 
     const updatedUser = await user.save();
 

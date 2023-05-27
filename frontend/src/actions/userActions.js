@@ -24,6 +24,7 @@ import {
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
 } from '../constants/userConstants';
+import { SEND_OTP_REQUEST } from '../constants/emailConstants'
 import axios from 'axios';
 import { ORDER_LIST_MY_ORDERS_RESET } from '../constants/orderConstants';
 
@@ -80,7 +81,39 @@ export const register = (name, email, password) => async (dispatch) => {
       { name, email, password },
       config
     );
+    
+    dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
 
+    dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+
+    localStorage.setItem('userInfo', JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: USER_REGISTER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const sendOTP = (name, email) => async (dispatch) => {
+  try {
+    dispatch({ type: SEND_OTP_REQUEST });
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data } = await axios.post(
+      '/api/users/verify',
+      { name, email },
+      config
+    );
+    
     dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
 
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
