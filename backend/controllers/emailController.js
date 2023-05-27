@@ -1,6 +1,9 @@
 import UserOTPVerification from '../models/otpModel.js';
 import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const oAuth2Client = new google.auth.OAuth2(
   process.env.CLIENT_ID,
@@ -47,15 +50,6 @@ const sendOTPVerificationEmail = async ({ _id, email }, res) => {
         }
       });
     });
-    
-    // transporter.verify((error, success) => {
-    //   if (error) {
-    //     console.log(error);
-    //   } else {
-    //     console.log('Ready for messages!');
-    //     console.log(success);
-    //   }
-    // });
 
     const mailOptions = {
       from: process.env.AUTH_EMAIL,
@@ -66,14 +60,14 @@ const sendOTPVerificationEmail = async ({ _id, email }, res) => {
     };
     await transporter.sendMail(mailOptions);
 
-    res.json({
+    return {
       status: 'Pending...',
       message: 'Verification OTP email is sent!',
       data: {
         userId: _id,
         email,
       },
-    });
+    };
   } catch (error) {
     res.json({
       status: 'Failed',
