@@ -23,11 +23,11 @@ const LoginScreen = () => {
   const { loading, error, userInfo } = useSelector((state) => state.userLogin);
   const redirect = location.search ? location.search.split('=')[1] : '/';
 
-  useEffect(() => {
-    if (userInfo) {
-      navigate(redirect);
-    }
-  }, [userInfo, redirect, navigate]);
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     navigate(redirect);
+  //   }
+  // }, [userInfo, redirect, navigate]);
   
   return (
     <FormContainer>
@@ -63,7 +63,7 @@ const LoginScreen = () => {
       <Row className="py-3">
         <Col>
           New Customer?{' '}
-          <Link to={redirect ? `/register?redirect=${redirect}` : '/register'}>
+          <Link to='/register'>
             Register
           </Link>
         </Col>

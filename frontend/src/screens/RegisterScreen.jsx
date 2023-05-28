@@ -21,6 +21,7 @@ const RegisterScreen = () => {
     } else {
       dispatch(register(name, email, password));
     }
+    navigate('/verify')
   };
 
   const location = useLocation();
@@ -32,11 +33,11 @@ const RegisterScreen = () => {
   );
   const redirect = location.search ? location.search.split('=')[1] : '/';
 
-  useEffect(() => {
-    if (userInfo) {
-      navigate(redirect);
-    }
-  }, [userInfo, redirect, navigate]);
+  // useEffect(() => {
+  //   if (userInfo) {
+  //     navigate('/verify');
+  //   }
+  // }, [userInfo, navigate]);
 
   return (
     <FormContainer>

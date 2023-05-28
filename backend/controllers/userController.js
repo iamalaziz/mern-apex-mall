@@ -1,7 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import { generateToken } from '../utils/generateToken.js';
-import sendOTPVerificationEmail from './emailController.js';
+import { sendOTPVerificationEmail } from './emailController.js';
 
 // @desc    Auth User & get token
 // @route   POST /api/users/login

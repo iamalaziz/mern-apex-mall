@@ -1,4 +1,5 @@
 import express from 'express';
+import { verifyOTP } from '../controllers/emailController.js';
 import {
   authUser,
   deleteUser,
@@ -24,5 +25,6 @@ router
   .delete(protect, admin, deleteUser)
   .get(protect, admin, getUserById)
   .put(protect, admin, updateUser);
+router.route('/verify').post(verifyOTP);
 
 export default router;
