@@ -26,12 +26,12 @@ export const createOrder = (order) => async (dispatch, getState) => {
     dispatch({ type: ORDER_CREATE_REQUEST });
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userLoginInfo },
     } = getState();
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userLoginInfo.token}`,
       },
     };
 
@@ -54,12 +54,12 @@ export const getOrderDetails = (id) => async (dispatch, getState) => {
     dispatch({ type: ORDER_DETAILS_REQUEST });
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userLoginInfo },
     } = getState();
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userLoginInfo.token}`,
       },
     };
 
@@ -85,13 +85,13 @@ export const payOrder =
       });
 
       const {
-        userLogin: { userInfo },
+        userLogin: { userLoginInfo },
       } = getState();
 
       const config = {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${userInfo.token}`,
+          Authorization: `Bearer ${userLoginInfo.token}`,
         },
       };
 
@@ -127,12 +127,12 @@ export const deliverOrder = (order) => async (dispatch, getState) => {
     });
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userLoginInfo },
     } = getState();
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userLoginInfo.token}`,
       },
     };
 
@@ -168,12 +168,12 @@ export const listMyOrders = () => async (dispatch, getState) => {
     });
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userLoginInfo },
     } = getState();
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userLoginInfo.token}`,
       },
     };
 
@@ -203,12 +203,12 @@ export const listOrders = () => async (dispatch, getState) => {
     dispatch({ type: ORDER_LIST_REQUEST });
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userLoginInfo },
     } = getState();
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userLoginInfo.token}`,
       },
     };
     const { data } = await axios.get('/api/orders', config);

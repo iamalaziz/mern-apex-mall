@@ -12,20 +12,21 @@ const VerifyOTPScreen = () => {
   const location = useLocation();
 
   const { userInfo } = useSelector((state) => state.userRegister);
+  const { userLoginInfo } = useSelector((state) => state.userLogin);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(userInfo._id, code);
-    dispatch(verifyEmail(userInfo._id, code));
+    dispatch(verifyEmail(userInfo._id, code, userInfo.email, userInfo.name));
   };
 
   const redirect = location.search ? location.search.split('=')[1] : '/';
 
   useEffect(() => {
-    if (userInfo) {
+    if (userLoginInfo) {
       navigate('/');
     }
-  }, [userInfo, redirect, navigate]);
+  }, [userLoginInfo, navigate]);
 
   return (
     <div>

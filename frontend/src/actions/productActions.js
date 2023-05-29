@@ -62,12 +62,12 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
     });
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userLoginInfo },
     } = getState();
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userLoginInfo.token}`,
       },
     };
 
@@ -96,12 +96,12 @@ export const createProduct = () => async (dispatch, getState) => {
     dispatch({ type: PRODUCT_CREATE_REQUEST });
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userLoginInfo },
     } = getState();
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userLoginInfo.token}`,
       },
     };
 
@@ -130,13 +130,13 @@ export const updateProduct = (product) => async (dispatch, getState) => {
     });
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userLoginInfo },
     } = getState();
 
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userLoginInfo.token}`,
       },
     };
 
@@ -174,13 +174,13 @@ export const createProductReview =
       });
 
       const {
-        userLogin: { userInfo },
+        userLogin: { userLoginInfo },
       } = getState();
 
       const config = {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${userInfo.token}`,
+          Authorization: `Bearer ${userLoginInfo.token}`,
         },
       };
 

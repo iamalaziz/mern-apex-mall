@@ -20,14 +20,14 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loading, error, userInfo } = useSelector((state) => state.userLogin);
+  const { loading, error, userLoginInfo } = useSelector((state) => state.userLogin);
   const redirect = location.search ? location.search.split('=')[1] : '/';
 
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     navigate(redirect);
-  //   }
-  // }, [userInfo, redirect, navigate]);
+  useEffect(() => {
+    if (userLoginInfo) {
+      navigate(redirect);
+    }
+  }, [userLoginInfo, redirect, navigate]);
   
   return (
     <FormContainer>

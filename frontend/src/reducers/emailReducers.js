@@ -5,7 +5,7 @@ export const emailReducer = (state = {}, action) => {
     case VERIFY_EMAIL_REQUEST:
       return { loading: true };
     case VERIFY_EMAIL_SUCCESS:
-      return { loading: false, status: true };
+      return { loading: false, status: true, data: action.payload };
     case VERIFY_EMAIL_FAIL:
       return { loading: false, error: action.payload };
     default:

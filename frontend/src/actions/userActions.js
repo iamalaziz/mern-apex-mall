@@ -47,10 +47,10 @@ export const login = (email, password) => async (dispatch) => {
       { email, password },
       config
     );
-
+    console.log(data)
     dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
 
-    localStorage.setItem('userInfo', JSON.stringify(data));
+    localStorage.setItem('userLoginInfo', JSON.stringify(data));
   } catch (error) {
     dispatch({
       type: USER_LOGIN_FAIL,
@@ -63,7 +63,7 @@ export const login = (email, password) => async (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
-  localStorage.removeItem('userInfo');
+  localStorage.removeItem('userLoginInfo');
   dispatch({ type: USER_LOGOUT });
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: ORDER_LIST_MY_ORDERS_RESET });
@@ -102,7 +102,7 @@ export const register = (name, email, password) => async (dispatch) => {
   }
 };
 
-export const verifyEmail = (userId, otp) => async (dispatch) => {
+export const verifyEmail = (userId, otp, email, name) => async (dispatch) => {
   try {
     dispatch({ type: VERIFY_EMAIL_REQUEST });
 
@@ -118,11 +118,13 @@ export const verifyEmail = (userId, otp) => async (dispatch) => {
       config
     );
 
-    dispatch({ type: VERIFY_EMAIL_SUCCESS, payload: data });
-    dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
-    dispatch({ type: USER_LOGIN_SUCCESS, payload: data });
+    dispatch(login(email, '123456'));
 
-    localStorage.setItem('userInfo', JSON.stringify(data));
+    dispatch({ type: VERIFY_EMAIL_SUCCESS, payload: data });
+    // dispatch({type: USER_LOGIN_SUCCESS, payload: x})
+
+    localStorage.setItem('email', JSON.stringify(data));
+    // localStorage.setItem('userLoginInfo', JSON.stringify(x));
   } catch (error) {
     dispatch({
       type: VERIFY_EMAIL_FAIL,
@@ -139,12 +141,12 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     dispatch({ type: USER_DETAILS_REQUEST });
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userLoginInfo },
     } = getState();
     const config = {
       headers: {
         'Conten-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userLoginInfo.token}`,
       },
     };
 
@@ -167,12 +169,12 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     dispatch({ type: USER_UPDATE_PROFILE_REQUEST });
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userLoginInfo },
     } = getState();
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userLoginInfo.token}`,
       },
     };
 
@@ -195,11 +197,11 @@ export const listUsers = () => async (dispatch, getState) => {
     dispatch({ type: USER_LIST_REQUEST });
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userLoginInfo },
     } = getState();
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userLoginInfo.token}`,
       },
     };
 
@@ -222,12 +224,12 @@ export const deleteUser = (id) => async (dispatch, getState) => {
     dispatch({ type: USER_DELETE_REQUEST });
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userLoginInfo },
     } = getState();
 
     const config = {
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userLoginInfo.token}`,
       },
     };
 
@@ -256,13 +258,13 @@ export const updateUser = (user) => async (dispatch, getState) => {
     });
 
     const {
-      userLogin: { userInfo },
+      userLogin: { userLoginInfo },
     } = getState();
 
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${userInfo.token}`,
+        Authorization: `Bearer ${userLoginInfo.token}`,
       },
     };
 

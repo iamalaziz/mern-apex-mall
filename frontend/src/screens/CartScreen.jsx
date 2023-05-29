@@ -22,7 +22,7 @@ const CartScreen = () => {
   const qty = location.search ? Number(location.search.split('=')[1]) : 1;
   const { cartItems } = useSelector((state) => state.cart);
 
-  const { userInfo } = useSelector((state) => state.userLogin);
+  const { userLoginInfo } = useSelector((state) => state.userLogin);
 
   useEffect(() => {
     if (productId) {
@@ -41,7 +41,7 @@ const CartScreen = () => {
     <Row>
       <Col md={8}>
         <h1>Shopping Cart</h1>
-        {cartItems.length === 0 || !userInfo ? (
+        {cartItems.length === 0 || !userLoginInfo ? (
           <Message>
             Your cart is empty <Link to="/">Go Back</Link>
           </Message>
@@ -89,7 +89,7 @@ const CartScreen = () => {
           </ListGroup>
         )}
       </Col>
-      {userInfo && (
+      {userLoginInfo && (
         <Col md={4}>
           <Card>
             <ListGroup variant="flush">

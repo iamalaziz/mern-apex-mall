@@ -11,15 +11,15 @@ const OrderListScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error, orders } = useSelector((state) => state.orderList);
-  const { userInfo } = useSelector((state) => state.userLogin);
+  const { userLoginInfo } = useSelector((state) => state.userLogin);
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
+    if (userLoginInfo && userLoginInfo.isAdmin) {
       dispatch(listOrders());
     } else {
       navigate('/login');
     }
-  }, [userInfo, dispatch, navigate]);
+  }, [userLoginInfo, dispatch, navigate]);
 
   return (
     <>

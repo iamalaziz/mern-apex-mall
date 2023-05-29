@@ -26,7 +26,7 @@ const OrderScreen = () => {
     (state) => state.orderDeliver
   );
 
-  const { userInfo } = useSelector((state) => state.userLogin);
+  const { userLoginInfo } = useSelector((state) => state.userLogin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id: orderId } = useParams();
@@ -42,7 +42,7 @@ const OrderScreen = () => {
   }
 
   useEffect(() => {
-    if (!userInfo) {
+    if (!userLoginInfo) {
       navigate('/login');
     }
     const addPaypalScript = async () => {
@@ -205,7 +205,7 @@ const OrderScreen = () => {
                 </ListGroup.Item>
               )}
 
-              {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+              {userLoginInfo && userLoginInfo.isAdmin && order.isPaid && !order.isDelivered && (
                 <ListGroup.Item className='d-grid'>
                   <Button
                     type="button"

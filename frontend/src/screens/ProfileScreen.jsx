@@ -29,7 +29,7 @@ const ProfileScreen = () => {
   const navigate = useNavigate();
 
   const { loading, error, user } = useSelector((state) => state.userDetails);
-  const { userInfo } = useSelector((state) => state.userLogin);
+  const { userLoginInfo } = useSelector((state) => state.userLogin);
   const { success } = useSelector((state) => state.updateProfile);
   const {
     loading: loadingOrders,
@@ -38,7 +38,7 @@ const ProfileScreen = () => {
   } = useSelector((state) => state.orderMyList);
 
   useEffect(() => {
-    if (!userInfo) {
+    if (!userLoginInfo) {
       navigate('/login');
     } else {
       if (!user.name) {
@@ -49,7 +49,7 @@ const ProfileScreen = () => {
         setEmail(user.email);
       }
     }
-  }, [dispatch, userInfo, navigate, user]);
+  }, [dispatch, userLoginInfo, navigate, user]);
 
   return (
     <Row>

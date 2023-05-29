@@ -33,11 +33,11 @@ const RegisterScreen = () => {
   );
   const redirect = location.search ? location.search.split('=')[1] : '/';
 
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     navigate('/verify');
-  //   }
-  // }, [userInfo, navigate]);
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/verify');
+    }
+  }, [userInfo, navigate]);
 
   return (
     <FormContainer>

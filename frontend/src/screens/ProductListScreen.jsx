@@ -22,7 +22,7 @@ const ProductListScreen = () => {
   const { loading, error, products } = useSelector(
     (state) => state.productList
   );
-  const { userInfo } = useSelector((state) => state.userLogin);
+  const { userLoginInfo } = useSelector((state) => state.userLogin);
 
   const {
     loading: loadingDelete,
@@ -40,7 +40,7 @@ const ProductListScreen = () => {
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET });
 
-    if (!userInfo || !userInfo.isAdmin) {
+    if (!userLoginInfo || !userLoginInfo.isAdmin) {
       navigate('/login');
     }
     dispatch(listProducts());
@@ -52,7 +52,7 @@ const ProductListScreen = () => {
   }, [
     dispatch,
     navigate,
-    userInfo,
+    userLoginInfo,
     successDelete,
     successCreate,
     createdProduct,

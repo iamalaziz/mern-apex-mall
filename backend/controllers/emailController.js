@@ -2,7 +2,7 @@ import UserOTPVerification from '../models/otpModel.js';
 import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
 import dotenv from 'dotenv';
-
+import User from '../models/userModel.js'
 dotenv.config();
 
 const oAuth2Client = new google.auth.OAuth2(
@@ -15,7 +15,7 @@ oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN });
 
 export const sendOTPVerificationEmail = async ({ _id, email }, res) => {
   try {
-    const otp = Math.floor(Math.random() * 9000) + 1000;
+    const otp = Math.floor(100000 + Math.random() * 900000);
     console.log(otp)
     const newOTPVerification = await new UserOTPVerification({
       userId: _id,
@@ -101,6 +101,7 @@ export const verifyOTP = async (req, res) => {
             throw new Error('Invalid code passed. Check your inbox!');
           } else {
             await User.updateOne({ _id: userId }, { verified: true });
+            console.log('verified')
             // await UserOTPVerification.deleteMany({ userId });
             res.json({
               status: 'Verified',

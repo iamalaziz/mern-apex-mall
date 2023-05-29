@@ -34,7 +34,7 @@ const ProductScreen = () => {
   );
   const { success: successProductReview, error: errorProductReview } =
     useSelector((state) => state.productReview);
-  const { userInfo } = useSelector((state) => state.userLogin);
+  const { userLoginInfo } = useSelector((state) => state.userLogin);
 
   useEffect(() => {
     if (successProductReview) {
@@ -162,7 +162,7 @@ const ProductScreen = () => {
                 {errorProductReview && (
                   <Message variant="danger">{errorProductReview}</Message>
                 )}
-                {userInfo ? (
+                {userLoginInfo ? (
                   <Form onSubmit={submitHandler}>
                     <Form.Group controlId="rating">
                       <Form.Label>Rating</Form.Label>

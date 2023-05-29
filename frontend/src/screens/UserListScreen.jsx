@@ -12,18 +12,18 @@ const UserListScreen = () => {
   const navigate = useNavigate();
 
   const { loading, error, users } = useSelector((state) => state.userList);
-  const { userInfo } = useSelector((state) => state.userLogin);
+  const { userLoginInfo } = useSelector((state) => state.userLogin);
 
   const {success: successDelete} = useSelector((state) => state.userDelete) 
 
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
+    if (userLoginInfo && userLoginInfo.isAdmin) {
       dispatch(listUsers());
     } else {
       navigate('/login');
     }
-  }, [dispatch, navigate, successDelete, userInfo]);
+  }, [dispatch, navigate, successDelete, userLoginInfo]);
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure')) {
