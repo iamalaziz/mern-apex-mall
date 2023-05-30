@@ -6,8 +6,6 @@ This repository contains an E-commerce web app built with  MERN stack
 
 The goal of this project is to provide a simple, easy-to-use prediction model that can be used by doctors and medical professionals to quickly and accurately predict whether a patient has diabetes.
 
-### <a href="https://diaprognosis.vercel.app/">Demo</a> - hosted by <a href="https://vercel.com">Vercel</a> 
-
 ### Tech Stack and Packages
 
 | Client  | Server  |
@@ -33,7 +31,7 @@ The goal of this project is to provide a simple, easy-to-use prediction model th
 - Pagination
 - Slider
 
-### [Demo](http://apex-mall.onrender.com/) - Click on the Demo to checkout the website hosted on Vercel
+### [Demo](http://apex-mall.onrender.com/) - Click on the Demo to checkout the website hosted on Render.
 
 
 
