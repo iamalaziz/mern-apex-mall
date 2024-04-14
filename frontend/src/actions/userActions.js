@@ -63,6 +63,7 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: ORDER_LIST_MY_ORDERS_RESET });
   dispatch({ type: USER_LIST_RESET });
+  localStorage.clear()
 };
 
 export const register = (name, email, password) => async (dispatch) => {

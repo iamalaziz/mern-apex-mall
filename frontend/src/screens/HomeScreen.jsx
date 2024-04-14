@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap';
-import Product from '../components/Product';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
+import { useParams } from 'react-router-dom';
+
+// components
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { useParams } from 'react-router-dom';
+import Hero from '../components/Hero/Hero';
+import Product from '../components/Product';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -22,6 +25,7 @@ const HomeScreen = () => {
   return (
     <>
       <h1>Latest Products</h1>
+      <Hero />
       {loading ? (
         <Loader />
       ) : error ? (

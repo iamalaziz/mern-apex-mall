@@ -15,8 +15,11 @@ const Header = () => {
   };
 
   return (
-    <header>
-       <Navbar expand="lg" collapseOnSelect>
+    <header className="w-full">
+      <div className="navbar">
+        <div className="logo">Ecobazar</div>
+      </div>
+      <Navbar expand="lg" collapseOnSelect>
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
@@ -32,7 +35,12 @@ const Header = () => {
             <Nav className="ms-auto">
               <LinkContainer to="/cart">
                 <Nav.Link>
-                  <i className="fas fa-shopping-cart"></i> Cart
+                  <i className="fas fa-shopping-cart"></i>
+                </Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/favourite">
+                <Nav.Link>
+                  <img src="icons/heart.png" alt="heart" />
                 </Nav.Link>
               </LinkContainer>
               {userInfo ? (
