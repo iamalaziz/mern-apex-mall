@@ -58,12 +58,12 @@ const Rating = ({ value, text, color }) => {
           }
         ></i>
       </span>
-      <span className='text-secondary'>{text && text}</span>
+      <span className='text-gray-400 ml-2'>{text && text}</span>
     </div>
   );
 };
 
 Rating.defaultProps = {
-  color: '#f8e825',
+  color: '#FF8A00',
 }
 export default Rating;

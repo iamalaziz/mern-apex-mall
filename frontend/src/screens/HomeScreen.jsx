@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { listProducts } from '../actions/productActions';
 import { useParams } from 'react-router-dom';
@@ -7,7 +6,6 @@ import { useParams } from 'react-router-dom';
 // components
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import Hero from '../components/Hero/Hero';
 import Product from '../components/Product';
 
 const HomeScreen = () => {
@@ -24,22 +22,22 @@ const HomeScreen = () => {
 
   return (
     <>
-      <h1>Latest Products</h1>
-      <Hero />
+      <h2 className='font-medium text-2xl text-center my-6'>Introducing Our Products</h2>
+      {/* <Hero /> */}
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <Row>
+        <div className="flex flex-wrap w-full max-w-[80%]">
           {products.map((product) => {
             return (
-              <Col sm={12} md={6} lg={3} key={product._id}>
+              <div key={product._id} className='w-1/2 border md:w-1/3 lg:w-1/4'>
                 <Product product={product} />
-              </Col>
+              </div>
             );
           })}
-        </Row>
+        </div>
       )}
     </>
   );

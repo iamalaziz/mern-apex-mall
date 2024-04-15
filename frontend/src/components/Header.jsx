@@ -2,8 +2,12 @@ import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../actions/userActions';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
+
+// components
 import SearchBox from './SearchBox';
+// icons
+import { Address, Cart, Like, User } from '../assets/index';
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.userLogin);
@@ -16,41 +20,76 @@ const Header = () => {
 
   return (
     <header>
-       <Navbar expand="lg" collapseOnSelect>
+      <div className="top text-sm border-b-[1px] border-gray-300 w-full text-gray-500">
+        <div className="flex justify-between w-full max-w-[1500px] p-3 mx-auto">
+          <div className="flex">
+            <img src={Address} alt="address pin" />
+            <div className="ml-2 overflow-hidden">
+              Store Location: 67, Gaya 366, Busan, South Korea
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <select>
+              <option value="english">En</option>
+              <option value="Korean">Kr</option>
+            </select>
+            <select>
+              <option value="dollar">USD</option>
+              <option value="won">WON</option>
+            </select>
+            {userInfo ? (
+              <button onClick={handleLogout} className="hover:text-gray-900 cursor-pointer">Logout</button>
+            ) : (
+              <>
+                <div className="h-[20px] bg-gray-400 w-[1px]"></div>
+                <NavLink to="/login">
+                  <span className="hover:text-gray-900 cursor-pointer">
+                    Sign In
+                  </span>
+                </NavLink>
+                /
+                <NavLink to="/register">
+                  <span className="hover:text-gray-900 cursor-pointer">
+                    Sign Up
+                  </span>
+                </NavLink>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="navbar p-3 flex items-center justify-between w-full max-w-[1500px] mx-auto">
+        <NavLink to="/">
+          <div className="logo flex items-center">
+            <span className="mr-2">
+              <img src="icon.png" alt="plant icon" />
+            </span>
+            <h1 className="text-xl">
+              <span className="font-medium">Eco</span>
+              <span className="font-extralight">bazar</span>
+            </h1>
+          </div>
+        </NavLink>
+        <div className="search">
+          <SearchBox />
+        </div>
+        <nav className="flex items-center gap-2">
+          <img src={Like} alt="Like button" />
+          <div className="h-[30px] bg-gray-400 w-[1px]"></div>
+          <NavLink to="/cart">
+            <img src={Cart} alt="Cart button" />
+          </NavLink>
+          <NavLink to="/profile">
+            <img src={User} alt="user" />
+          </NavLink>
+        </nav>
+      </div>
+      {/* <Navbar expand="lg" collapseOnSelect>
         <Container>
-          <LinkContainer to="/">
-            <Navbar.Brand>
-              <span className="mx-2">
-                <img src="icon.png" alt="plant icon" />
-              </span>
-              ApexMall
-            </Navbar.Brand>
-          </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <SearchBox />
             <Nav className="ms-auto">
-              <LinkContainer to="/cart">
-                <Nav.Link>
-                  <i className="fas fa-shopping-cart"></i> Cart
-                </Nav.Link>
-              </LinkContainer>
-              {userInfo ? (
-                <NavDropdown title={userInfo.name} id="username">
-                  <LinkContainer to="/profile">
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
-                  </LinkContainer>
-                  <NavDropdown.Item onClick={handleLogout}>
-                    Logout
-                  </NavDropdown.Item>
-                </NavDropdown>
-              ) : (
-                <LinkContainer to="/login">
-                  <Nav.Link>
-                    <i className="fas fa-user"></i> Sign In
-                  </Nav.Link>
-                </LinkContainer>
-              )}
+              
               {userInfo && userInfo.isAdmin && (
                 <NavDropdown title="Admin" id="adminmenu">
                   <LinkContainer to="/admin/userlist">
@@ -67,7 +106,7 @@ const Header = () => {
             </Nav>
           </Navbar.Collapse>
         </Container>
-      </Navbar>
+      </Navbar> */}
     </header>
   );
 };

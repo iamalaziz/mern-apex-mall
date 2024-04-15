@@ -1,24 +1,40 @@
-main {
-  min-height: 80vh;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Poppins';
+}
+
+* {
+  box-sizing: border-box;
+  /* outline: 1px solid red; */
+}
+h2 {
+  @apply text-2xl;
+}
+img {
+  max-width: 100%;
+  display: block;
 }
 a {
   text-decoration: none;
 }
+
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
 }
-h1 {
-  font-size: 1.8rem;
-  padding: 1rem 0;
+
+img {
+  max-width: 100%;
+  display: block;
 }
-h2 {
-  font-size: 1.4rem;
-  padding: .5rem 0;
+
+.card-cart:hover svg path{
+  stroke: white !important;
 }
-h3 {
-  padding: 1rem 0;
-}
-.rating span {
-  margin: 0.1rem;
-}
-  
