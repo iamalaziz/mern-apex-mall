@@ -7,7 +7,7 @@ import { useNavigate, NavLink } from 'react-router-dom';
 // components
 import SearchBox from './SearchBox';
 // icons
-import { Address, Cart, Like, User } from '../assets/index';
+import { Address, Cart, Like, Plant, User } from '../assets/index';
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.userLogin);
@@ -21,7 +21,7 @@ const Header = () => {
   return (
     <header>
       <div className="top text-sm border-b-[1px] border-gray-300 w-full text-gray-500">
-        <div className="flex justify-between w-full max-w-[1500px] p-3 mx-auto">
+        <div className="flex justify-between w-full max-w-[95%] py-3 mx-auto">
           <div className="flex">
             <img src={Address} alt="address pin" />
             <div className="ml-2 overflow-hidden">
@@ -38,7 +38,12 @@ const Header = () => {
               <option value="won">WON</option>
             </select>
             {userInfo ? (
-              <button onClick={handleLogout} className="hover:text-gray-900 cursor-pointer">Logout</button>
+              <button
+                onClick={handleLogout}
+                className="hover:text-gray-900 cursor-pointer"
+              >
+                Logout
+              </button>
             ) : (
               <>
                 <div className="h-[20px] bg-gray-400 w-[1px]"></div>
@@ -58,11 +63,11 @@ const Header = () => {
           </div>
         </div>
       </div>
-      <div className="navbar p-3 flex items-center justify-between w-full max-w-[1500px] mx-auto">
+      <div className="navbar py-3 flex items-center justify-between w-full max-w-[95%] mx-auto">
         <NavLink to="/">
           <div className="logo flex items-center">
             <span className="mr-2">
-              <img src="icon.png" alt="plant icon" />
+              <img src={Plant} alt="plant icon" />
             </span>
             <h1 className="text-xl">
               <span className="font-medium">Eco</span>

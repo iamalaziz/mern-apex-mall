@@ -1,15 +1,10 @@
-import React from 'react'
-import {Alert} from 'react-bootstrap';
+import React from 'react';
 
-const Message = ({variant, children}) => {
-  return (
-    <Alert variant={variant}>
-      {children}
-    </Alert>
-  )
-}
+const Message = ({ bg, children }) => {
+  return <div className={`${bg} p-3 rounded-xl`}>{children}</div>;
+};
 
 Message.defaultProps = {
-  variant: 'info'
-}
-export default Message
+  variant: 'info',
+};
+export default Message;

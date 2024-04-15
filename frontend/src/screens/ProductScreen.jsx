@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import {
-  Row,
-  Col,
-  Image,
-  ListGroup,
-  Card,
-  Button,
-  Form,
-} from 'react-bootstrap';
 import Rating from '../components/Rating';
 import {
   createProductReview,
@@ -19,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants';
+import { Profile } from '../assets';
+import SVG from '../components/SVG';
 
 const ProductScreen = () => {
   const [qty, setQty] = useState(1);
@@ -55,7 +48,7 @@ const ProductScreen = () => {
     dispatch(createProductReview(currentProductId, { rating, comment }));
   }
   return (
-    <>
+    <section className="max-w-[75%]">
       <Link to="/" className="btn btn-ligh my-3">
         Go back
       </Link>
@@ -65,144 +58,141 @@ const ProductScreen = () => {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
-          <Row>
-            <Col md={6}>
-              <Image src={product.image} alt={product.name} fluid />
-            </Col>
-            <Col md={3}>
-              <ListGroup variant="flush">
-                <ListGroup.Item>
-                  <h3>{product.name}</h3>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Rating
-                    value={product.rating}
-                    text={`${product.numReviews} reviews`}
-                  />
-                </ListGroup.Item>
-                <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
-                <ListGroup.Item>
-                  Description: {product.description}
-                </ListGroup.Item>
-              </ListGroup>
-            </Col>
-            <Col md={3}>
-              <Card>
-                <ListGroup>
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>Price: </Col>
-                      <Col>
-                        <strong>${product.price}</strong>
-                      </Col>
-                    </Row>
-                  </ListGroup.Item>
-                  <ListGroup.Item>
-                    <Row>
-                      <Col>Status</Col>
-                      <Col>
-                        {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
-                      </Col>
-                    </Row>
-                  </ListGroup.Item>
+          <div className="flex gap-6 py-8 border-b-[1px]">
+            <div className="w-1/2">
+              <img src={product.image} width="100%" alt={product.name} />
+            </div>
+            <div className="w-1/2">
+              <div>
+                <div className="title flex items-start mb-2">
+                  <h3 className="text-2xl font-medium flex-1">
+                    {product.name}
+                  </h3>
                   {product.countInStock > 0 && (
-                    <ListGroup.Item>
-                      <Row>
-                        <Col>Qty: </Col>
-                        <Col>
-                          <Form.Control
-                            as="select"
-                            value={qty}
-                            onChange={(e) => setQty(e.target.value)}
-                          >
-                            {[...Array(product.countInStock).keys()].map(
-                              (x) => (
-                                <option key={x + 1} value={x + 1}>
-                                  {x + 1}
-                                </option>
-                              )
-                            )}
-                          </Form.Control>
-                        </Col>
-                      </Row>
-                    </ListGroup.Item>
+                    <span className="px-2 py-1 ml-2 bg-green-100 text-green-600 rounded-lg">
+                      In Stock
+                    </span>
                   )}
-                  <ListGroup.Item>
-                    <Row>
-                      <Button
-                        onClick={addToCartHandler}
-                        className="btn block"
-                        type="button"
-                        disabled={product.countInStock === 0}
-                      >
-                        Add to Cart
-                      </Button>
-                    </Row>
-                  </ListGroup.Item>
-                </ListGroup>
-              </Card>
-            </Col>
-          </Row>
-          <Row>
-            <Col md={6}>
-              <h2>Reviews</h2>
-              {product && product.reviews.length === 0 && <Message>No Reviews</Message>}
-              <ListGroup variant="flush">
-                {product && product.reviews.map((review) => (
-                  <ListGroup.Item key={review._id}>
-                    <strong>{review.name}</strong>
-                    <Rating value={review.rating} />
-                    <p>{review.createdAt.substring(0, 10)}</p>
-                    <p>{review.comment}</p>
-                  </ListGroup.Item>
+                </div>
+                <Rating
+                  value={product.rating}
+                  text={`${product.numReviews} reviews`}
+                />
+                <h3 className="text-2xl font-medium text-green-700 py-6 border-b-[1px]">
+                  ${product.price}
+                </h3>
+                <p className="text-gray-500 py-4 border-b-[1px]">
+                  {product.description}
+                </p>
+              </div>
+              <div className="py-4 border-b-[1px]">
+                <div className="flex items-center h-12 gap-2">
+                  <div className="count flex p-2 rounded-full border border-gray-200">
+                    <button
+                      onClick={(e) => setQty(qty - 1)}
+                      className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full"
+                    >
+                      -
+                    </button>
+                    <input
+                      type="text"
+                      value={qty}
+                      className="max-w-8 mx-auto text-center"
+                    />
+                    <button
+                      onClick={(e) => setQty(qty + 1)}
+                      className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <button
+                    onClick={addToCartHandler}
+                    disabled={product.countInStock === 0}
+                    className="flex items-center justify-center gap-2 h-full flex-1 bg-green-500 text-white rounded-full"
+                  >
+                    Add To Cart{' '}
+                    <span>
+                      <SVG
+                        item="cart"
+                        style={{ stroke: '#fff' }}
+                        className="stroke-white"
+                      />
+                    </span>
+                  </button>
+                  <div className="h-10 w-10  border border-gray-400 rounded-full flex items-center justify-center cursor-pointer hover:bg-white">
+                    <SVG item="like" style={{ width: '20px' }} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="w-1/2">
+            <h3 className="text-2xl my-4">Customer Feedback</h3>
+            {product && product.reviews.length === 0 && (
+              <Message>No Reviews</Message>
+            )}
+            <ul>
+              {product &&
+                product.reviews.map((review) => (
+                  <li key={review._id} className="py-4 border-b-[1px]">
+                    <div className="flex gap-4 w-full mb-2">
+                      <img src={Profile} alt="profile" />
+                      <div>
+                        <strong className="font-normal">{review.name}</strong>
+                        <Rating value={review.rating} />
+                      </div>
+                      <p className="ml-auto text-gray-500">
+                        {review.createdAt.substring(0, 10)}
+                      </p>
+                    </div>
+                    <p className="text-gray-500">{review.comment}</p>
+                  </li>
                 ))}
-              </ListGroup>
-              <ListGroup.Item>
-                <h2>Write a Customer Review</h2>
-                {errorProductReview && (
-                  <Message variant="danger">{errorProductReview}</Message>
-                )}
-                {userInfo ? (
-                  <Form onSubmit={submitHandler}>
-                    <Form.Group controlId="rating">
-                      <Form.Label>Rating</Form.Label>
-                      <Form.Control
-                        as="select"
-                        value={rating}
-                        onChange={(e) => setRating(e.target.value)}
-                      >
-                        <option value="">Select...</option>
-                        <option value="1">1 - Poor</option>
-                        <option value="2">2 - Fair</option>
-                        <option value="3">3 - Good</option>
-                        <option value="4">4 - Very Good</option>
-                        <option value="5">5 - Excellent</option>
-                      </Form.Control>
-                    </Form.Group>
-                    <Form.Group controlId="comment">
-                      <Form.Label>Comment</Form.Label>
-                      <Form.Control
-                        as="textarea"
-                        row="3"
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                      ></Form.Control>
-                    </Form.Group>
-                    <Button type="submit" variant="primary">
-                      Submit
-                    </Button>
-                  </Form>
-                ) : (
-                  <Message>
-                    Please, <Link to="/login">sing in</Link> first
-                  </Message>
-                )}
-              </ListGroup.Item>
-            </Col>
-          </Row>
+            </ul>
+            <div>
+              <h2 className="text-2xl my-4">Write a Customer Review</h2>
+              {errorProductReview && (
+                <Message variant="danger">{errorProductReview}</Message>
+              )}
+              {userInfo ? (
+                <form onSubmit={submitHandler}>
+                  <div>
+                    <label>Rating {'>'} </label>
+                    <select
+                      value={rating}
+                      onChange={(e) => setRating(e.target.value)}
+                      className='text-gray-500'
+                    >
+                      <option value="">Choose</option>
+                      <option value="1">1 - Poor</option>
+                      <option value="2">2 - Fair</option>
+                      <option value="3">3 - Good</option>
+                      <option value="4">4 - Very Good</option>
+                      <option value="5">5 - Excellent</option>
+                    </select>
+                  </div>
+                  <div>
+                    <textarea value={comment} row="20" onChange={(e) => setComment(e.target.value)}
+                      className="peer h-full min-h-[100px] w-full rounded-lg border border-blue-gray-200 my-4 p-3 text-blue-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 focus:border-1 focus:border-gray-900 focus:outline-0"
+                      placeholder="Comment..."
+                      required
+                    ></textarea>
+                  </div>
+                  <button type='submit' className='px-2 py-1 bg-green-100 text-green-600 rounded-lg ml-auto'>
+                    Submit
+                  </button>
+                </form>
+              ) : (
+                <Message bg='bg-blue-100 border border-blue-400'>
+                  Please, <Link to="/login">sing in</Link> first
+                </Message>
+              )}
+            </div>
+          </div>
         </>
       )}
-    </>
+    </section>
   );
 };
 

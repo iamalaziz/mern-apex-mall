@@ -6,12 +6,12 @@ import { Link } from 'react-router-dom';
 const Product = ({ product }) => {
   return (
     <>
-      <div className="h-full relative hover:border hover:border-[#00B207] hover:shadow-2xl">
+      <div className="h-full border rounded-lg relative bg-white hover:border hover:border-[#00B207] hover:shadow-3xl">
         <div className="absolute top-2 right-2 border border-gray-400 rounded-full w-10 h-10 flex items-center justify-center cursor-pointer hover:bg-white" >
           <SVG item='like' style={{width: '20px'}}/>
         </div>
         <Link to={`/product/${product._id}`}>
-          <img src={product.image} width="100%" alt='product'/>
+          <img src={product.image} width="100%" alt='product' className='rounded-t-lg'/>
           <div className="flex justify-between p-2">
             <div>
               <h3 className="font-light leading-none pb-2 min-h-12 max-w-[220px]">

@@ -21,25 +21,26 @@ const HomeScreen = () => {
   }, [dispatch, keyword]);
 
   return (
-    <>
-      <h2 className='font-medium text-2xl text-center my-6'>Introducing Our Products</h2>
+    <div className="relative w-full mx-auto pt-8 pb-10">
+      <div className="absolute bg-gray-100 w-[120%] top-0 bottom-0 -z-20"></div>
+      <h2 className='font-medium text-2x text-center my-10'>Introducing Our Products</h2>
       {/* <Hero /> */}
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <div className="flex flex-wrap w-full max-w-[80%]">
+        <div className="grid grid-cols-2 gap-2 w-full mx-auto max-w-[80%] md:grid-cols-3 lg:grid-cols-4">
           {products.map((product) => {
             return (
-              <div key={product._id} className='w-1/2 border md:w-1/3 lg:w-1/4'>
+              <div key={product._id}>
                 <Product product={product} />
               </div>
             );
           })}
         </div>
       )}
-    </>
+    </div>
   );
 };
 
