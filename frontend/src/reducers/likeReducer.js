@@ -4,12 +4,12 @@ export const likeReducer = (state = { likedItems: [] }, action) => {
   switch (action.type) {
     case LIKE_ADD_ITEM:
       const item = action.payload;
-      const existItem = state.likedItems.find((x) => x.product === item.product);
+      const existItem = state.likedItems.find((x) => x._id === item._id);
       if (existItem) {
         return {
           ...state,
           likedItems: state.likedItems.map((x) =>
-            x.product === existItem.product ? item : x
+            x._id === existItem._id ? item : x
           ),
         };
       } else {
@@ -22,7 +22,7 @@ export const likeReducer = (state = { likedItems: [] }, action) => {
       return {
         ...state,
         likedItems: state.likedItems.filter(
-          (x) => x.product !== action.payload
+          (x) => x._id !== action.payload
         ),
       };
     default:

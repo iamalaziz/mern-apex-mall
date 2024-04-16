@@ -5,6 +5,7 @@ import Rating from '../components/Rating';
 import {
   createProductReview,
   listProductDetails,
+  likeProduct,
 } from '../actions/productActions';
 import { addToCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,19 +25,20 @@ const ProductScreen = () => {
 
   const { id: currentProductId } = useParams();
 
-  const addToCartHandler = () => {
-    dispatch(addToCart(product._id, qty ));
-    navigate('/cart');
-  };
-
+  const { userInfo } = useSelector((state) => state.userLogin);
   const { loading, error, product } = useSelector(
     (state) => state.productDetails
   );
 
+  const isLiked = product.likes && product.likes[userInfo._id];
+
+  const addToCartHandler = () => {
+    dispatch(addToCart(product._id, qty));
+    navigate('/cart');
+  };
+
   const { success: successProductReview, error: errorProductReview } =
     useSelector((state) => state.productReview);
-
-  const { userInfo } = useSelector((state) => state.userLogin);
 
   useEffect(() => {
     if (successProductReview) {
@@ -52,6 +54,7 @@ const ProductScreen = () => {
     e.preventDefault();
     dispatch(createProductReview(currentProductId, { rating, comment }));
   }
+
   return (
     <section className="max-w-[75%]">
       <Link to="/" className="btn btn-ligh my-3">
@@ -127,9 +130,19 @@ const ProductScreen = () => {
                       />
                     </span>
                   </button>
-                  <div className="h-10 w-10  border border-gray-400 rounded-full flex items-center justify-center cursor-pointer hover:bg-white">
-                    <SVG item="like" style={{ width: '20px' }} />
-                  </div>
+                  <button
+                    onClick={() => dispatch(likeProduct(product._id))}
+                    className="h-10 w-10 bg-green-100 rounded-full flex items-center justify-center cursor-pointer"
+                  >
+                    {isLiked ? (
+                      <SVG
+                        item="like"
+                        style={{ width: '20px', fill: 'red', stroke: 'red' }}
+                      />
+                    ) : (
+                      <SVG item="like" style={{ width: '20px', stroke: 'green' }} />
+                    )}
+                  </button>
                 </div>
               </div>
             </div>
@@ -183,7 +196,7 @@ const ProductScreen = () => {
                   <div>
                     <textarea
                       value={comment}
-                      id='comment'
+                      id="comment"
                       row="20"
                       onChange={(e) => setComment(e.target.value)}
                       className="peer h-full min-h-[100px] w-full rounded-lg border border-blue-gray-200 my-4 p-3 text-blue-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 focus:border-1 focus:border-gray-900 focus:outline-0"

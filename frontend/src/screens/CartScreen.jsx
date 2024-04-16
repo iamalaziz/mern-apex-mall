@@ -52,7 +52,7 @@ const CartScreen = () => {
               </thead>
               <tbody>
                 {cartItems.map((item) => (
-                  <tr key={item.product} className="p-2">
+                  <tr key={item._id} className="p-2">
                     <td className="px-6 py-3 border-b border-slate-400">
                       <img
                         src={item.image}
@@ -61,7 +61,7 @@ const CartScreen = () => {
                       />
                     </td>
                     <td className="px-6 py-3 font-medium text-gray-700 border-b border-slate-400">
-                      <Link to={`/product/${item.product}`}>{item.name}</Link>
+                      <Link to={`/product/${item._id}`}>{item.name}</Link>
                     </td>
                     <td className="px-6 py-3 text-gray-500 border-b border-slate-400">
                       ${item.price}
@@ -71,10 +71,10 @@ const CartScreen = () => {
                         <button
                           onClick={(e) => {
                             if (item.qty === 1) {
-                              dispatch(removeFromCart(item.product));
+                              dispatch(removeFromCart(item._id));
                               return;
                             }
-                            dispatch(addToCart(item.product, item.qty - 1));
+                            dispatch(addToCart(item._id, item.qty - 1));
                           }}
                           className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full"
                         >
@@ -82,18 +82,18 @@ const CartScreen = () => {
                         </button>
                         <input
                           type="text"
-                          id={item.product}
+                          id={item._id}
                           value={item.qty}
                           className="max-w-8 mx-auto text-center"
                           onChange={(e) =>
                             dispatch(
-                              addToCart(item.product, Number(e.target.value))
+                              addToCart(item._id, Number(e.target.value))
                             )
                           }
                         />
                         <button
                           onClick={() =>
-                            dispatch(addToCart(item.product, item.qty + 1))
+                            dispatch(addToCart(item._id, item.qty + 1))
                           }
                           className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full"
                         >
@@ -107,7 +107,7 @@ const CartScreen = () => {
                     <td className="px-6 py-3 text-gray-500 border-b border-slate-400">
                       <button
                         className="cursor-pointer"
-                        onClick={() => dispatch(removeFromCart(item.product))}
+                        onClick={() => dispatch(removeFromCart(item._id))}
                       >
                         <img
                           src={Cross}

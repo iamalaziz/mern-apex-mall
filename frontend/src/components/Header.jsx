@@ -77,7 +77,9 @@ const Header = () => {
           <SearchBox />
         </div>
         <nav className="flex items-center gap-2">
-          <img src={Like} alt="Like button" />
+          <NavLink to='/favorites'>
+            <img src={Like} alt="Like button" />
+          </NavLink>
           <div className="h-[30px] bg-gray-400 w-[1px]"></div>
           <NavLink to="/cart">
             <img src={Cart} alt="Cart button" />

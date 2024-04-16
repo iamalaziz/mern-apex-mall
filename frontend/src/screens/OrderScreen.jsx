@@ -72,7 +72,6 @@ const OrderScreen = () => {
   }, [dispatch, orderId, successPay]);
 
   const successPaymentHandler = (paymentResult) => {
-    console.log(paymentResult);
     dispatch(payOrder(orderId, paymentResult));
   };
 
@@ -145,7 +144,7 @@ const OrderScreen = () => {
                             />
                           </Col>
                           <Col>
-                            <Link to={`/product/${item.product}`}>
+                            <Link to={`/product/${item._id}`}>
                               {item.name}
                             </Link>
                           </Col>

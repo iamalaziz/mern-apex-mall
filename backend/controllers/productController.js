@@ -117,13 +117,41 @@ const createProductReview = asyncHandler(async (req, res) => {
     product.reviews.push(review);
 
     product.numReviews = product.reviews.length;
-    console.log(product.reviews.length);
+
     product.rating =
       product.reviews.reduce((acc, item) => item.rating + acc, 0) /
       product.reviews.length;
 
     await product.save();
     res.status(201).json({ message: 'Review added' });
+  } else {
+    res.status(404);
+    throw new Error('Product not found');
+  }
+});
+
+// @desc    Update a product
+// @route   PUT /api/products/:id/like
+// @access  Private/Admin
+const likeProduct = asyncHandler(async (req, res) => {
+  const { userId } = req.body;
+  const product = await Product.findById(req.params.id);
+
+  if (product) {
+    if (!product.likes) {
+      product.likes = new Map();
+    }
+
+    const isLiked = product.likes.has(userId);
+
+    if (isLiked) {
+      product.likes.delete(userId);
+    } else {
+      product.likes.set(userId, true);
+    }
+
+    const updatedProduct = await product.save();
+    res.json(updatedProduct);
   } else {
     res.status(404);
     throw new Error('Product not found');
@@ -137,4 +165,5 @@ export {
   createProduct,
   updateProduct,
   createProductReview,
+  likeProduct,
 };

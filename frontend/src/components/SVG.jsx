@@ -20,24 +20,6 @@ const SVG = ({ item, style }) => {
           />
         </svg>
       )}
-      {item === 'fill-like' && (
-        <svg
-          width="30"
-          height="26"
-          viewBox="0 0 30 26"
-          fill="red"
-          xmlns="http://www.w3.org/2000/svg"
-          style={{
-            trasnition: '.1s all',
-          }}
-        >
-          <path
-            d="M14.9995 24.5722C-11.6667 9.83334 6.99999 -6.16666 14.9995 3.95075C23 -6.16666 41.6666 9.83334 14.9995 24.5722Z"
-            stroke="red"
-            strokeWidth="1.5"
-          />
-        </svg>
-      )}
       {item === 'cart' && (
         <svg
           width="34"

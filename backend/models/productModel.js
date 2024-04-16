@@ -73,6 +73,10 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
+    likes: {
+      type: Map,
+      of: Boolean,
+    },
   },
   {
     timestamps: true,

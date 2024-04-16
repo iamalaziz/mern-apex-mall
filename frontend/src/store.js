@@ -73,9 +73,9 @@ const paymentMethodFromStorage = localStorage.getItem('paymentMethod')
   ? JSON.parse(localStorage.getItem('paymentMethod'))
   : {};
 
-// const likedItemsFromStorage = localStorage.getItem('likedItems')
-//   ? JSON.parse(localStorage.getItem('likedItems'))
-//   : {};
+const likedItemsFromStorage = localStorage.getItem('likedItems')
+  ? JSON.parse(localStorage.getItem('likedItems'))
+  : {};
 
 const initialState = {
   cart: {
