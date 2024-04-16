@@ -4,3 +4,4 @@ export {default as Cart} from './icons/Bag.svg';
 export {default as Plant} from './icons/plant.svg';
 export {default as User} from './icons/user.svg';
 export {default as Profile} from './icons/profile.svg';
+export {default as Cross} from './icons/cross.svg';

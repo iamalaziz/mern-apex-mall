@@ -6,6 +6,7 @@ import {
   createProductReview,
   listProductDetails,
 } from '../actions/productActions';
+import { addToCart } from '../actions/cartActions';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
@@ -19,14 +20,22 @@ const ProductScreen = () => {
   const [comment, setComment] = useState('');
 
   const dispatch = useDispatch();
-  const { id: currentProductId } = useParams();
   const navigate = useNavigate();
+
+  const { id: currentProductId } = useParams();
+
+  const addToCartHandler = () => {
+    dispatch(addToCart(product._id, qty ));
+    navigate('/cart');
+  };
 
   const { loading, error, product } = useSelector(
     (state) => state.productDetails
   );
+
   const { success: successProductReview, error: errorProductReview } =
     useSelector((state) => state.productReview);
+
   const { userInfo } = useSelector((state) => state.userLogin);
 
   useEffect(() => {
@@ -38,10 +47,6 @@ const ProductScreen = () => {
     }
     dispatch(listProductDetails(currentProductId));
   }, [dispatch, currentProductId, successProductReview]);
-
-  const addToCartHandler = () => {
-    navigate(`/cart/${currentProductId}?qty=${qty}`);
-  };
 
   function submitHandler(e) {
     e.preventDefault();
@@ -58,11 +63,11 @@ const ProductScreen = () => {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
-          <div className="flex gap-6 py-8 border-b-[1px]">
-            <div className="w-1/2">
+          <div className="flex flex-col gap-6 py-8 border-b-[1px] md:flex-row">
+            <div className="md:w-1/2">
               <img src={product.image} width="100%" alt={product.name} />
             </div>
-            <div className="w-1/2">
+            <div className="md:w-1/2">
               <div>
                 <div className="title flex items-start mb-2">
                   <h3 className="text-2xl font-medium flex-1">
@@ -89,18 +94,20 @@ const ProductScreen = () => {
                 <div className="flex items-center h-12 gap-2">
                   <div className="count flex p-2 rounded-full border border-gray-200">
                     <button
-                      onClick={(e) => setQty(qty - 1)}
+                      onClick={() => setQty(qty - 1)}
                       className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full"
                     >
                       -
                     </button>
                     <input
                       type="text"
+                      id="quantity"
                       value={qty}
                       className="max-w-8 mx-auto text-center"
+                      onChange={(e) => setQty(e.target.value)}
                     />
                     <button
-                      onClick={(e) => setQty(qty + 1)}
+                      onClick={() => setQty(qty + 1)}
                       className="w-8 h-8 flex items-center justify-center bg-gray-200 rounded-full"
                     >
                       +
@@ -111,7 +118,7 @@ const ProductScreen = () => {
                     disabled={product.countInStock === 0}
                     className="flex items-center justify-center gap-2 h-full flex-1 bg-green-500 text-white rounded-full"
                   >
-                    Add To Cart{' '}
+                    Add To Cart
                     <span>
                       <SVG
                         item="cart"
@@ -127,14 +134,14 @@ const ProductScreen = () => {
               </div>
             </div>
           </div>
-          <div className="w-1/2">
+          <div className="md:w-1/2">
             <h3 className="text-2xl my-4">Customer Feedback</h3>
-            {product && product.reviews.length === 0 && (
+            {product && product.reviews && product.reviews.length === 0 && (
               <Message>No Reviews</Message>
             )}
             <ul>
               {product &&
-                product.reviews.map((review) => (
+                product.reviews?.map((review) => (
                   <li key={review._id} className="py-4 border-b-[1px]">
                     <div className="flex gap-4 w-full mb-2">
                       <img src={Profile} alt="profile" />
@@ -158,11 +165,12 @@ const ProductScreen = () => {
               {userInfo ? (
                 <form onSubmit={submitHandler}>
                   <div>
-                    <label>Rating {'>'} </label>
+                    <label htmlFor="rating">Rating {'>'} </label>
                     <select
                       value={rating}
+                      id="rating"
                       onChange={(e) => setRating(e.target.value)}
-                      className='text-gray-500'
+                      className="text-gray-500"
                     >
                       <option value="">Choose</option>
                       <option value="1">1 - Poor</option>
@@ -173,18 +181,25 @@ const ProductScreen = () => {
                     </select>
                   </div>
                   <div>
-                    <textarea value={comment} row="20" onChange={(e) => setComment(e.target.value)}
+                    <textarea
+                      value={comment}
+                      id='comment'
+                      row="20"
+                      onChange={(e) => setComment(e.target.value)}
                       className="peer h-full min-h-[100px] w-full rounded-lg border border-blue-gray-200 my-4 p-3 text-blue-gray-700 outline-none transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 focus:border-1 focus:border-gray-900 focus:outline-0"
                       placeholder="Comment..."
                       required
                     ></textarea>
                   </div>
-                  <button type='submit' className='px-2 py-1 bg-green-100 text-green-600 rounded-lg ml-auto'>
+                  <button
+                    type="submit"
+                    className="px-2 py-1 bg-green-100 text-green-600 rounded-lg ml-auto"
+                  >
                     Submit
                   </button>
                 </form>
               ) : (
-                <Message bg='bg-blue-100 border border-blue-400'>
+                <Message>
                   Please, <Link to="/login">sing in</Link> first
                 </Message>
               )}

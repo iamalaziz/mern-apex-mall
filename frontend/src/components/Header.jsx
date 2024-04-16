@@ -1,5 +1,3 @@
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../actions/userActions';
 import { useNavigate, NavLink } from 'react-router-dom';
@@ -29,11 +27,11 @@ const Header = () => {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <select>
+            <select id="language">
               <option value="english">En</option>
               <option value="Korean">Kr</option>
             </select>
-            <select>
+            <select id="currency">
               <option value="dollar">USD</option>
               <option value="won">WON</option>
             </select>
