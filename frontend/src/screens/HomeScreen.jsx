@@ -11,7 +11,7 @@ import Product from '../components/Product';
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const {keyword} = useParams();
-
+  
   const { loading, products, error } = useSelector(
     (state) => state.productList
   );
@@ -28,7 +28,7 @@ const HomeScreen = () => {
       {loading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error}</Message>
+        <Message bg='border-red bg-red-200'>{error}</Message>
       ) : (
         <div className="grid grid-cols-2 gap-2 w-full mx-auto max-w-[80%] md:grid-cols-3 lg:grid-cols-4">
           {products.map((product) => {

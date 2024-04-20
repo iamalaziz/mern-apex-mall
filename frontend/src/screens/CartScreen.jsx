@@ -2,21 +2,23 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import Message from '../components/Message';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { Cross } from '../assets';
 
 const CartScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const location = useLocation();
   const { cartItems } = useSelector((state) => state.cart);
 
   const { userInfo } = useSelector((state) => state.userLogin);
   return (
     <section className="max-w-[95%]">
-      <h2 className="font-medium text-2x text-center my-10">
-        My Shopping Cart
-      </h2>
+      {location.pathname === '/cart' && (
+        <h2 className="font-medium text-2x text-center my-10">
+          My Shopping Cart
+        </h2>
+      )}
       {cartItems.length === 0 || !userInfo ? (
         <Message>
           Your cart is empty{' '}
@@ -84,7 +86,7 @@ const CartScreen = () => {
                           type="text"
                           id={item._id}
                           value={item.qty}
-                          className="max-w-8 mx-auto text-center"
+                          className="w-8 mx-auto text-center"
                           onChange={(e) =>
                             dispatch(
                               addToCart(item._id, Number(e.target.value))
@@ -122,7 +124,10 @@ const CartScreen = () => {
               <tfoot>
                 <tr>
                   <td colSpan="6" className="text-right">
-                    <button onClick={() => navigate('/')} className='rounded-full bg-gray-100 px-4 py-2 m-2 cursor-pointer'>
+                    <button
+                      onClick={() => navigate('/')}
+                      className="rounded-full bg-gray-100 px-4 py-2 m-2 cursor-pointer"
+                    >
                       Continue Shopping
                     </button>
                   </td>

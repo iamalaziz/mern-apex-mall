@@ -81,7 +81,7 @@ const OrderScreen = () => {
   return loading ? (
     <Loader />
   ) : error ? (
-    <Message variant="danger">{error}</Message>
+    <Message bg='border-red bg-red-200'>{error}</Message>
   ) : (
     <>
       <h1>Order {order._id}</h1>
@@ -106,7 +106,7 @@ const OrderScreen = () => {
               {order.isDelivered ? (
                 <Message variant="success">Delivered</Message>
               ) : (
-                <Message variant="danger">Not Delivered</Message>
+                <Message bg='border-red bg-red-200'>Not Delivered</Message>
               )}
             </ListGroup.Item>
 
@@ -121,7 +121,7 @@ const OrderScreen = () => {
                   Paid on {order.paidAt.substring(0, 10)}
                 </Message>
               ) : (
-                <Message variant="danger">Not Paid</Message>
+                <Message bg='border-red bg-red-200'>Not Paid</Message>
               )}
             </ListGroup.Item>
 

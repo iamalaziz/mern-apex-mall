@@ -89,9 +89,9 @@ const SearchBox = () => {
         </div>
         <div className="relative w-full">
           <input
-            type="search"
-            // type="text"
-            name=""
+            // type="search"
+            type="text"
+            value={keyword}
             placeholder="Search Products..."
             onChange={(e) => setKeyword(e.target.value)}
             id="search-dropdown"
@@ -99,7 +99,7 @@ const SearchBox = () => {
           />
           <button
             type="submit"
-            className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-[#00B207] rounded-e-lg border border-[#00B207] hover:bg-[#1bcb20] focus:ring-4 outline-none focus:ring-[#00B207]"
+            className="absolute top-0 right-0 p-2.5 text-sm font-medium h-full text-white bg-[#00B207] rounded-e-lg border border-[#00B207] hover:bg-[#1bcb20] focus:ring-4 outline-none focus:ring-[#00B207]"
           >
             <svg
               className="w-4 h-4"

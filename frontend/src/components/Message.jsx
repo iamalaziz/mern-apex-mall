@@ -5,7 +5,7 @@ const Message = ({ bg, children }) => {
     <div
       className={`${
         bg ? bg : 'bg-blue-100 border border-blue-400'
-      } p-3 rounded-xl`}
+      } p-3 rounded-xl mb-2`}
     >
       {children}
     </div>

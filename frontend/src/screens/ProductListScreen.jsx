@@ -81,9 +81,9 @@ const ProductListScreen = () => {
         </Col>
       </Row>
       {loadingDelete && <Loader />}
-      {errorDelete && <Message variant="danger">{errorDelete}</Message>}
+      {errorDelete && <Message bg='border-red bg-red-200'>{errorDelete}</Message>}
       {loadingCreate && <Loader />}
-      {errorCreate && <Message variant="danger">{errorCreate}</Message>}
+      {errorCreate && <Message bg='border-red bg-red-200'>{errorCreate}</Message>}
       {loading ? (
         <Loader />
       ) : error ? (

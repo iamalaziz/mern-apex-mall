@@ -89,7 +89,9 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
     if (req.body.password) {
       user.password = req.body.password;
     }
-
+    if(req.body.profileImage){
+      user.profileImage = req.body.profileImage
+    }
     const updatedUser = await user.save();
 
     res.json({
@@ -97,6 +99,7 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
+      profileImage: updatedUser.profileImage,
       token: generateToken(updatedUser._id),
     });
   } else {

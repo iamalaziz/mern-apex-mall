@@ -4,6 +4,7 @@ import { useNavigate, NavLink } from 'react-router-dom';
 
 // components
 import SearchBox from './SearchBox';
+import Navbar from './Navbar';
 // icons
 import { Address, Cart, Like, Plant, User } from '../assets/index';
 
@@ -11,11 +12,11 @@ const Header = () => {
   const { userInfo } = useSelector((state) => state.userLogin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate('/');
-  };
 
+  const handleLogout = () => {
+    dispatch(logout())
+    navigate('/')
+  }
   return (
     <header>
       <div className="top text-sm border-b-[1px] border-gray-300 w-full text-gray-500">
@@ -77,41 +78,33 @@ const Header = () => {
           <SearchBox />
         </div>
         <nav className="flex items-center gap-2">
-          <NavLink to='/favorites'>
+          <NavLink to="/favorites">
             <img src={Like} alt="Like button" />
           </NavLink>
           <div className="h-[30px] bg-gray-400 w-[1px]"></div>
           <NavLink to="/cart">
             <img src={Cart} alt="Cart button" />
           </NavLink>
-          <NavLink to="/profile">
+          <NavLink to="/profile/settings">
             <img src={User} alt="user" />
           </NavLink>
         </nav>
       </div>
-      {/* <Navbar expand="lg" collapseOnSelect>
-        <Container>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto">
-              
-              {userInfo && userInfo.isAdmin && (
-                <NavDropdown title="Admin" id="adminmenu">
-                  <LinkContainer to="/admin/userlist">
-                    <NavDropdown.Item>Users</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/admin/productlist">
-                    <NavDropdown.Item>Products</NavDropdown.Item>
-                  </LinkContainer>
-                  <LinkContainer to="/admin/orderlist">
-                    <NavDropdown.Item>Orders</NavDropdown.Item>
-                  </LinkContainer>
-                </NavDropdown>
-              )}
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar> */}
+      <Navbar />
+      {/* 
+      {userInfo && userInfo.isAdmin && (
+        <NavDropdown title="Admin" id="adminmenu">
+          <LinkContainer to="/admin/userlist">
+            <NavDropdown.Item>Users</NavDropdown.Item>
+          </LinkContainer>
+          <LinkContainer to="/admin/productlist">
+            <NavDropdown.Item>Products</NavDropdown.Item>
+          </LinkContainer>
+          <LinkContainer to="/admin/orderlist">
+            <NavDropdown.Item>Orders</NavDropdown.Item>
+          </LinkContainer>
+        </NavDropdown>
+      )} */}
     </header>
   );
 };

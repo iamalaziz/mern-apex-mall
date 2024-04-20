@@ -27,7 +27,7 @@ const OrderListScreen = () => {
       {loading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error}</Message>
+        <Message bg="border-red bg-red-200">{error}</Message>
       ) : (
         <Table striped bordered hover responsive className="table-sm">
           <thead>

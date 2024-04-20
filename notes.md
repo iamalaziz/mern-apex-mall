@@ -5,6 +5,8 @@ Implement
 - add toastify
 - handle out of stock products, disabled button
 - HomeScree rerender when liked
+- cra OR vite
+
 Warns & Errors
 
 - [Violation] 'loadend' handler took 3122ms [got this in productscreen]

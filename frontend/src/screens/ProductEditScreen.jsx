@@ -24,14 +24,16 @@ const ProductEditScreen = () => {
 
   const dispatch = useDispatch();
 
-  const { loading, error, product } = useSelector((state) => state.productDetails);
+  const { loading, error, product } = useSelector(
+    (state) => state.productDetails
+  );
 
   const {
     loading: loadingUpdate,
     error: errorUpdate,
     success: successUpdate,
   } = useSelector((state) => state.productUpdate);
-  
+
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
@@ -49,13 +51,14 @@ const ProductEditScreen = () => {
         setDescription(product.description);
       }
     }
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, navigate, productId, successUpdate, product._id]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append('image', file);
+    console.log(formData)
     setUploading(true);
 
     try {
@@ -64,10 +67,10 @@ const ProductEditScreen = () => {
           'Content-Type': 'multipart/form-data',
         },
       };
-
+      console.log(formData);
       const { data } = await axios.post('/api/upload', formData, config);
-
-      setImage(data);
+      console.log(data)
+      setImage(data.image);
       setUploading(false);
     } catch (error) {
       console.error(error);
@@ -99,11 +102,13 @@ const ProductEditScreen = () => {
       <FormContainer>
         <h1>Edit Product</h1>
         {loadingUpdate && <Loader />}
-        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
+        {errorUpdate && (
+          <Message bg="border-red bg-red-200">{errorUpdate}</Message>
+        )}
         {loading ? (
           <Loader />
         ) : error ? (
-          <Message variant="danger">{error}</Message>
+          <Message bg="border-red bg-red-200">{error}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId="name">

@@ -180,7 +180,6 @@ export const likeProduct = (product_id) => async (dispatch, getState) => {
     const {
       userLogin: { userInfo },
     } = getState();
-
     const config = {
       headers: {
         'Content-Type': 'application/json',

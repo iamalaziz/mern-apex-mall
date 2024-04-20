@@ -30,11 +30,15 @@ const ProductScreen = () => {
     (state) => state.productDetails
   );
 
-  const isLiked = product.likes && product.likes[userInfo._id];
+  const isLiked = product.likes && userInfo && product.likes[userInfo._id];
 
   const addToCartHandler = () => {
-    dispatch(addToCart(product._id, qty));
-    navigate('/cart');
+    if (userInfo) {
+      dispatch(addToCart(product._id, qty));
+      navigate('/cart');
+    } else {
+      navigate('/login');
+    }
   };
 
   const { success: successProductReview, error: errorProductReview } =
@@ -57,9 +61,6 @@ const ProductScreen = () => {
 
   return (
     <section className="max-w-[75%]">
-      <Link to="/" className="btn btn-ligh my-3">
-        Go back
-      </Link>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -68,7 +69,12 @@ const ProductScreen = () => {
         <>
           <div className="flex flex-col gap-6 py-8 border-b-[1px] md:flex-row">
             <div className="md:w-1/2">
-              <img src={product.image} width="100%" alt={product.name} />
+              <img
+                src={product.image}
+                width="100%"
+                alt={product.name}
+                loading="lazy"
+              />
             </div>
             <div className="md:w-1/2">
               <div>
@@ -76,16 +82,29 @@ const ProductScreen = () => {
                   <h3 className="text-2xl font-medium flex-1">
                     {product.name}
                   </h3>
-                  {product.countInStock > 0 && (
+                  {product.countInStock > 0 ? (
                     <span className="px-2 py-1 ml-2 bg-green-100 text-green-600 rounded-lg">
                       In Stock
                     </span>
+                  ) : (
+                    <span className="px-2 py-1 ml-2 bg-gray-800 text-white rounded-lg">
+                      Out of Stock
+                    </span>
                   )}
                 </div>
-                <Rating
-                  value={product.rating}
-                  text={`${product.numReviews} reviews`}
-                />
+                <div className="flex items-center gap-2">
+                  <Rating
+                    value={product.rating}
+                    text={`${product.numReviews} reviews`}
+                  />
+                  ·
+                  <div className="flex items-center gap-2 text-gray-400">
+                    <SVG item="like" style={{ stroke: 'red', width: '18px' }} />
+                    <span>
+                      {product.likes && Object.keys(product.likes).length} likes
+                    </span>
+                  </div>
+                </div>
                 <h3 className="text-2xl font-medium text-green-700 py-6 border-b-[1px]">
                   ${product.price}
                 </h3>
@@ -105,8 +124,9 @@ const ProductScreen = () => {
                     <input
                       type="text"
                       id="quantity"
+                      name="quantity"
                       value={qty}
-                      className="max-w-8 mx-auto text-center"
+                      className="w-8 mx-auto text-center"
                       onChange={(e) => setQty(e.target.value)}
                     />
                     <button
@@ -119,7 +139,7 @@ const ProductScreen = () => {
                   <button
                     onClick={addToCartHandler}
                     disabled={product.countInStock === 0}
-                    className="flex items-center justify-center gap-2 h-full flex-1 bg-green-500 text-white rounded-full"
+                    className="flex items-center justify-center gap-2 h-full flex-1 bg-green-500 text-white rounded-full disabled:bg-gray-400"
                   >
                     Add To Cart
                     <span>
@@ -140,7 +160,10 @@ const ProductScreen = () => {
                         style={{ width: '20px', fill: 'red', stroke: 'red' }}
                       />
                     ) : (
-                      <SVG item="like" style={{ width: '20px', stroke: 'green' }} />
+                      <SVG
+                        item="like"
+                        style={{ width: '20px', stroke: 'green' }}
+                      />
                     )}
                   </button>
                 </div>

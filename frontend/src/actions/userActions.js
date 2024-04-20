@@ -63,7 +63,7 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: ORDER_LIST_MY_ORDERS_RESET });
   dispatch({ type: USER_LIST_RESET });
-  localStorage.clear()
+  localStorage.clear();
 };
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -217,37 +217,37 @@ export const updateUser = (user) => async (dispatch, getState) => {
   try {
     dispatch({
       type: USER_UPDATE_REQUEST,
-    })
+    });
 
     const {
       userLogin: { userInfo },
-    } = getState()
+    } = getState();
 
     const config = {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
-    }
+    };
 
-    const { data } = await axios.put(`/api/users/${user._id}`, user, config)
+    const { data } = await axios.put(`/api/users/${user._id}`, user, config);
 
-    dispatch({ type: USER_UPDATE_SUCCESS })
+    dispatch({ type: USER_UPDATE_SUCCESS });
 
-    dispatch({ type: USER_DETAILS_SUCCESS, payload: data })
+    dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
 
-    dispatch({ type: USER_DETAILS_RESET })
+    dispatch({ type: USER_DETAILS_RESET });
   } catch (error) {
     const message =
       error.response && error.response.data.message
         ? error.response.data.message
-        : error.message
+        : error.message;
     if (message === 'Not authorized, token failed') {
-      dispatch(logout())
+      dispatch(logout());
     }
     dispatch({
       type: USER_UPDATE_FAIL,
       payload: message,
-    })
+    });
   }
-}
+};
