@@ -6,6 +6,7 @@ Implement
 - handle out of stock products, disabled button
 - HomeScree rerender when liked
 - cra OR vite
+- remove Profile Image
 
 Warns & Errors
 

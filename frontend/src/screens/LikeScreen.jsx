@@ -23,7 +23,6 @@ const LikeScreen = () => {
         <>
           <div className="grid grid-cols-2 gap-2 w-full mx-auto max-w-[80%] md:grid-cols-3 lg:grid-cols-4">
             {likedItems?.map((product) => {
-              console.log(product);
               return (
                 <div key={product._id}>
                   <Product product={product} />

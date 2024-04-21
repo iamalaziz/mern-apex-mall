@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../actions/userActions';
+import { getUserDetails, logout } from '../actions/userActions';
 import { useNavigate, NavLink } from 'react-router-dom';
 
 // components
@@ -10,13 +11,17 @@ import { Address, Cart, Like, Plant, User } from '../assets/index';
 
 const Header = () => {
   const { userInfo } = useSelector((state) => state.userLogin);
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    dispatch(logout())
-    navigate('/')
-  }
+    dispatch(logout());
+    navigate('/');
+  };
+  useEffect(() => {
+    dispatch(getUserDetails('profile'))
+  }, [userInfo])
   return (
     <header>
       <div className="top text-sm border-b-[1px] border-gray-300 w-full text-gray-500">
@@ -86,7 +91,17 @@ const Header = () => {
             <img src={Cart} alt="Cart button" />
           </NavLink>
           <NavLink to="/profile/settings">
-            <img src={User} alt="user" />
+            {userInfo?.profileImage ? (
+              <div className="flex justify-center items-center h-[30px] w-[30px] bg-gray-200 rounded-full overflow-hidden">
+                <img
+                  src={userInfo.profileImage}
+                  alt="user"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ) : (
+              <img src={User} className="profile" />
+            )}
           </NavLink>
         </nav>
       </div>

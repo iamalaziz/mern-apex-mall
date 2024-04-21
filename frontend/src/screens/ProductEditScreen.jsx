@@ -58,7 +58,7 @@ const ProductEditScreen = () => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append('image', file);
-    console.log(formData)
+
     setUploading(true);
 
     try {
@@ -67,9 +67,8 @@ const ProductEditScreen = () => {
           'Content-Type': 'multipart/form-data',
         },
       };
-      console.log(formData);
       const { data } = await axios.post('/api/upload', formData, config);
-      console.log(data)
+
       setImage(data.image);
       setUploading(false);
     } catch (error) {

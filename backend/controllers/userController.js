@@ -16,6 +16,7 @@ export const authUser = asyncHandler(async (req, res) => {
       email: user.email,
       name: user.name,
       isAdmin: user.isAdmin,
+      profileImage: user.profileImage,
       token: generateToken(user._id),
     });
   } else {
@@ -69,6 +70,7 @@ export const getUserProfile = asyncHandler(async (req, res) => {
       email: user.email,
       name: user.name,
       isAdmin: user.isAdmin,
+      profileImage: user.profileImage
     });
   } else {
     res.status(404);
@@ -77,7 +79,7 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 });
 
 // @desc    Update Profile
-// @route   GET /api/users/profile
+// @route   PUT /api/users/profile
 // @access  Private
 
 export const updateUserProfile = asyncHandler(async (req, res) => {

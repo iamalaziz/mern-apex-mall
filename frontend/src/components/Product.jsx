@@ -13,7 +13,7 @@ const Product = ({ product }) => {
 
   useEffect(() => {
     setIsLiked(product.likes && userInfo && product.likes[userInfo._id]);
-  }, [product.likes, userInfo]);
+  }, [product, userInfo]);
 
   const handleLike = () => {
     if (userInfo) {
@@ -43,7 +43,7 @@ const Product = ({ product }) => {
         <img
           src={product.image}
           alt="product"
-          className="rounded-t-lg w-full h-44 object-cover"
+          className="rounded-t-lg w-full h-46 object-cover"
         />
         <div className="flex justify-between p-2">
           <div>
@@ -56,7 +56,9 @@ const Product = ({ product }) => {
               <div className="flex items-center gap-2 text-gray-400">
                 <SVG item="like" style={{ stroke: 'red', width: '18px' }} />
                 <span>
-                  {product.likes && Object.keys(product.likes).length}
+                  {isLiked
+                    ? product.likes && Object.keys(product.likes).length + 1
+                    : product.likes && Object.keys(product.likes).length}
                 </span>
               </div>
             </div>
