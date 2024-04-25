@@ -94,7 +94,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 // @route   POST /api/products/:id/reviews
 // @access  Private
 const createProductReview = asyncHandler(async (req, res) => {
-  const { rating, comment } = req.body;
+  const { rating, comment, profileImage } = req.body;
 
   const product = await Product.findById(req.params.id);
 
@@ -115,13 +115,16 @@ const createProductReview = asyncHandler(async (req, res) => {
       user: req.user._id,
     };
 
+    if (profileImage) {
+      review.profileImage = profileImage;
+    }
+
     product.reviews.push(review);
 
     product.numReviews = product.reviews.length;
 
-    product.rating =
-      product.reviews.reduce((acc, item) => item.rating + acc, 0) /
-      product.reviews.length;
+    const totalRating = product.reviews.reduce((acc, item) => item.rating + acc, 0);
+    product.rating = totalRating / product.reviews.length;
 
     await product.save();
     res.status(201).json({ message: 'Review added' });
@@ -130,6 +133,7 @@ const createProductReview = asyncHandler(async (req, res) => {
     throw new Error('Product not found');
   }
 });
+
 
 // @desc    Update a product
 // @route   PUT /api/products/:id/like

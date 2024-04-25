@@ -13,7 +13,7 @@ const CartScreen = () => {
 
   const { userInfo } = useSelector((state) => state.userLogin);
   return (
-    <section className="max-w-[95%]">
+    <section className="max-w-[95%] mb-6">
       {location.pathname === '/cart' && (
         <h2 className="font-medium text-2x text-center my-10">
           My Shopping Cart

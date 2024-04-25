@@ -7,7 +7,7 @@ import { Plant, ApplePay, Discover, Mastercard, Visa } from '../assets';
 
 const Footer = () => {
   return (
-    <footer className="w-full mt-10 py-8 bg-gray-900 text-gray-400">
+    <footer className="w-full mt-auto py-8 bg-gray-900 text-gray-400">
       <div className="max-w-[1300px] w-[95%] mx-auto">
         <div className="flex flex-wrap gap-4 justify-between py-4 mb-4">
           <div className="flex flex-col gap-3">

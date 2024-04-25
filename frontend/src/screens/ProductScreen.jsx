@@ -56,9 +56,16 @@ const ProductScreen = () => {
 
   function submitHandler(e) {
     e.preventDefault();
-    dispatch(createProductReview(currentProductId, { rating, comment }));
+    const reviewData = { rating, comment };
+    if(userInfo && userInfo.profileImage) {
+      reviewData.profileImage = userInfo.profileImage;
+    }
+    dispatch(createProductReview(currentProductId, reviewData));
   }
 
+  const salePercent = Math.round(
+    ((product.price - product.salePrice) / product.price) * 100
+  );
   return (
     <section className="max-w-[75%]">
       {loading ? (
@@ -105,9 +112,23 @@ const ProductScreen = () => {
                     </span>
                   </div>
                 </div>
-                <h3 className="text-2xl font-medium text-green-700 py-6 border-b-[1px]">
-                ₩{product.price}
-                </h3>
+                <div className="flex items-center gap-2 border-b-[1px]">
+                  <h3 className="text-2xl font-medium text-green-700 py-6">
+                    {product.salePrice !== 0
+                      ? `₩${product.salePrice}`
+                      : `₩${product.price}`}
+                  </h3>
+                  {product.salePrice !== 0 && (
+                    <h4 className="text-lg line-through font-medium text-gray-500">
+                      ₩{product.price}
+                    </h4>
+                  )}
+                  {salePercent !== 100 && (
+                    <div className="sale bg-red-500 text-white p-1 rounded-lg top-2 left-2">
+                      SALE {salePercent}%
+                    </div>
+                  )}
+                </div>
                 <p className="text-gray-500 py-4 border-b-[1px]">
                   {product.description}
                 </p>
@@ -170,7 +191,7 @@ const ProductScreen = () => {
               </div>
             </div>
           </div>
-          <div className="md:w-1/2">
+          <div className="mb-6 md:w-1/2">
             <h3 className="text-2xl my-4">Customer Feedback</h3>
             {product && product.reviews && product.reviews.length === 0 && (
               <Message>No Reviews</Message>
@@ -179,8 +200,23 @@ const ProductScreen = () => {
               {product &&
                 product.reviews?.map((review) => (
                   <li key={review._id} className="py-4 border-b-[1px]">
-                    <div className="flex gap-4 w-full mb-2">
-                      <img src={Profile} alt="profile" />
+                    <div className="flex items-center gap-4 w-full mb-2">
+                      {review.profileImage ? (
+                        <div className="flex justify-center items-center h-[40px] w-[40px] bg-gray-200 rounded-full overflow-hidden">
+                          <img
+                            src={review.profileImage}
+                            alt="user"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <img
+                          src={Profile}
+                          alt="profile"
+                          width="40px"
+                          height="40px"
+                        />
+                      )}
                       <div>
                         <strong className="font-normal">{review.name}</strong>
                         <Rating value={review.rating} />
