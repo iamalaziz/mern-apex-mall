@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Rating from './Rating';
-import SVG from './SVG';
 import { Link, useNavigate } from 'react-router-dom';
 import { likeProduct } from '../actions/productActions';
 import { useDispatch, useSelector } from 'react-redux';
+
+// components
+import Rating from './Rating';
+import SVG from './SVG';
 
 const Product = ({ product }) => {
   const dispatch = useDispatch();
@@ -24,8 +26,14 @@ const Product = ({ product }) => {
     }
   };
 
+  const salePercent = Math.round(
+    ((product.price - product.salePrice) / product.price) * 100
+  );
   return (
-    <div className="h-full border rounded-lg relative bg-white hover:border hover:border-[#00B207] hover:shadow-3xl">
+    <div className="product-container h-full border rounded-lg relative bg-white hover:border hover:border-[#00B207] hover:shadow-3xl">
+      {salePercent !== 100 && (
+        <div className="sale absolute bg-red-500 text-white p-1 rounded-lg top-2 left-2">SALE {salePercent}%</div>
+      )}
       <button
         onClick={handleLike}
         className="absolute top-2 right-2 border border-gray-400 rounded-full w-10 h-10 flex items-center justify-center cursor-pointer hover:bg-white"
@@ -50,7 +58,9 @@ const Product = ({ product }) => {
             <h3 className="font-light leading-none pb-2 min-h-12 max-w-[220px]">
               <strong className="text-sm line-clamp-2">{product.name}</strong>
             </h3>
-            <p className="text-xl">${product.price}</p>
+            <p className="text-xl">
+              ₩{product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            </p>
             <div className="flex items-center gap-2">
               <Rating value={product.rating} text={`${product.numReviews}`} />
               <div className="flex items-center gap-2 text-gray-400">
@@ -63,7 +73,7 @@ const Product = ({ product }) => {
               </div>
             </div>
           </div>
-          <div className="card-cart min-w-[50px] h-[50px] flex items-center justify-center rounded-full bg-gray-200 hover:bg-[#00B207] transition-colors duration-100">
+          <div className="card-cart min-w-[50px] h-[50px] flex items-center justify-center rounded-full bg-gray-200 transition-colors duration-100">
             <SVG
               item="cart"
               style={{ width: '30px' }}

@@ -42,6 +42,12 @@ img {
   display: block;
 }
 
-.card-cart:hover svg path{
+.card-cart:hover svg path {
   stroke: white !important;
+}
+.product-container:hover .card-cart {
+  background-color: #00b207;
+}
+.product-container:hover .card-cart svg path {
+  stroke: #fff;
 }

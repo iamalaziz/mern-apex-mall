@@ -25,6 +25,8 @@ const reviewSchema = mongoose.Schema(
   }
 );
 
+const ProductCategoryEnum = ['Electronics', 'Clothing', 'Books', 'Fresh Fruit', 'Vegetables', 'Beauty & Health', 'Sports', 'Bread & Bakery', 'Meat & Fish', 'Others'];
+
 const productSchema = mongoose.Schema(
   {
     user: {
@@ -42,10 +44,10 @@ const productSchema = mongoose.Schema(
     },
     brand: {
       type: String,
-      required: true,
     },
     category: {
       type: String,
+      enum: ProductCategoryEnum,
       required: true,
     },
     description: {
@@ -76,6 +78,14 @@ const productSchema = mongoose.Schema(
     likes: {
       type: Map,
       of: Boolean,
+    },
+    isBestSeller: {
+      type: Boolean,
+      default: false,
+    },
+    salePrice: {
+      type: Number,
+      default: 0,
     },
   },
   {

@@ -1,11 +1,9 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import FormContainer from '../components/FormContainer';
 import { listProductDetails, updateProduct } from '../actions/productActions';
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
 
@@ -15,12 +13,27 @@ const ProductEditScreen = () => {
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
+  const [salePrice, setSalePrice] = useState(0);
   const [image, setImage] = useState('');
   const [brand, setBrand] = useState('');
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState('');
+
   const [uploading, setUploading] = useState(false);
+
+  const ProductCategoryEnum = [
+    'Electronics',
+    'Clothing',
+    'Books',
+    'Fresh Fruit',
+    'Vegetables',
+    'Beauty & Health',
+    'Sports',
+    'Bread & Bakery',
+    'Meat & Fish',
+    'Others',
+  ];
 
   const dispatch = useDispatch();
 
@@ -44,6 +57,7 @@ const ProductEditScreen = () => {
       } else {
         setName(product.name);
         setPrice(product.price);
+        setSalePrice(product.salePrice);
         setImage(product.image);
         setBrand(product.brand);
         setCategory(product.category);
@@ -89,111 +103,144 @@ const ProductEditScreen = () => {
         category,
         description,
         countInStock,
+        salePrice
       })
     );
   };
 
   return (
-    <>
-      <Link to="/admin/productlist" className="btn btn-light my-3">
-        Go Back
-      </Link>
-      <FormContainer>
-        <h1>Edit Product</h1>
-        {loadingUpdate && <Loader />}
-        {errorUpdate && (
-          <Message bg="border-red bg-red-200">{errorUpdate}</Message>
-        )}
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <Message bg="border-red bg-red-200">{error}</Message>
-        ) : (
-          <Form onSubmit={submitHandler}>
-            <Form.Group controlId="name">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="name"
-                placeholder="Enter name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+    <div>
+      <Link to="/admin/productlist">Go Back</Link>
+      <h2 className="text-xl text-center">Edit Product</h2>
+      {loadingUpdate && <Loader />}
+      {errorUpdate && (
+        <Message bg="border-red bg-red-200">{errorUpdate}</Message>
+      )}
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message bg="border-red bg-red-200">{error}</Message>
+      ) : (
+        <form onSubmit={submitHandler} className="w-full flex flex-col gap-4">
+          <div className="flex justify-between items-center">
+            <label htmlFor="title">Product Title</label>
+            <input
+              type="title"
+              placeholder="Enter title"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="ml-auto border rounded-md p-2 w-[350px]"
+            />
+          </div>
 
-            <Form.Group controlId="price">
-              <Form.Label>Price</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter price"
-                value={price}
-                onChange={(e) => setPrice(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+          <div className="flex justify-between items-center">
+            <label htmlFor="price">Price</label>
+            <input
+              type="number"
+              placeholder="Enter price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              className="border rounded-md p-2 w-[350px]"
+            />
+          </div>
 
-            <Form.Group controlId="image">
-              <Form.Label>Image</Form.Label>
-              <Form.Control
+          <div className="flex justify-between items-center">
+            <label htmlFor="salePrice">Sale Price</label>
+            <input
+              type="number"
+              placeholder="Enter price"
+              value={salePrice}
+              onChange={(e) => setSalePrice(e.target.value)}
+              className="border rounded-md p-2 w-[350px]"
+            />
+          </div>
+
+          <div className="flex justify-between items-center">
+            <label htmlFor="image-url">Image</label>
+            <div>
+              <input
                 type="text"
+                id="image-url"
                 placeholder="Enter image url"
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
-              ></Form.Control>
-              <input
-                type="file"
-                id="image-file"
-                label="Choose File"
-                onChange={uploadFileHandler}
+                className="border rounded-md p-2 w-[350px]"
+                required
               />
-              {uploading && <Loader />}
-            </Form.Group>
+            </div>
+            {uploading && <Loader />}
+          </div>
 
-            <Form.Group controlId="brand">
-              <Form.Label>Brand</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter brand"
-                value={brand}
-                onChange={(e) => setBrand(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+          <div className="flex justify-between items-center">
+            <label htmlFor="image"></label>
+            <input
+              type="file"
+              id="image-file"
+              label="Choose File"
+              onChange={uploadFileHandler}
+            />
+            {uploading && <Loader />}
+          </div>
 
-            <Form.Group controlId="countInStock">
-              <Form.Label>Count In Stock</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter countInStock"
-                value={countInStock}
-                onChange={(e) => setCountInStock(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+          <div className="flex justify-between items-center">
+            <label htmlFor="brand">Brand</label>
+            <input
+              type="text"
+              placeholder="Enter brand"
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+              className="border rounded-md p-2 w-[350px]"
+            />
+          </div>
 
-            <Form.Group controlId="category">
-              <Form.Label>Category</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter category"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+          <div className="flex justify-between items-center">
+            <label htmlFor="countInStock">Count In Stock</label>
+            <input
+              type="number"
+              placeholder="Enter countInStock"
+              value={countInStock}
+              onChange={(e) => setCountInStock(e.target.value)}
+              className="border rounded-md p-2 w-[350px]"
+            />
+          </div>
 
-            <Form.Group controlId="description">
-              <Form.Label>Description</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+          <div className="flex justify-between items-center">
+            <label htmlFor="category">Category</label>
+            <select
+              id="category"
+              name="category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="border rounded-md p-2 w-[350px]"
+            >
+              {ProductCategoryEnum.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </div>
 
-            <Button type="submit" variant="primary">
-              Update
-            </Button>
-          </Form>
-        )}
-      </FormContainer>
-    </>
+          <div className="flex justify-between items-center">
+            <label htmlFor="description">Description</label>
+            <input
+              type="text"
+              placeholder="Enter description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="border rounded-md p-2 w-[350px]"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="ml-auto py-2 px-4 bg-green-400 rounded-full text-white"
+          >
+            Save Product
+          </button>
+        </form>
+      )}
+    </div>
   );
 };
 

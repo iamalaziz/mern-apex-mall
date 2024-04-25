@@ -66,7 +66,7 @@ const CartScreen = () => {
                       <Link to={`/product/${item._id}`}>{item.name}</Link>
                     </td>
                     <td className="px-6 py-3 text-gray-500 border-b border-slate-400">
-                      ${item.price}
+                      ₩{item.price}
                     </td>
                     <td className="px-6 py-3 border-b border-slate-400">
                       <div className="count flex p-2 rounded-full border border-gray-200">
@@ -104,7 +104,7 @@ const CartScreen = () => {
                       </div>
                     </td>
                     <td className="px-6 py-3 text-gray-500 border-b border-slate-400">
-                      ${(item.price * item.qty).toFixed(2)}
+                      ₩{(item.price * item.qty).toFixed(2)}
                     </td>
                     <td className="px-6 py-3 text-gray-500 border-b border-slate-400">
                       <button
@@ -159,7 +159,7 @@ const CartScreen = () => {
                 <tr>
                   <td className="px-3 text-gray-700">Subtotal</td>
                   <td className="px-3">
-                    $
+                    ₩
                     {cartItems
                       .reduce((acc, curr) => acc + curr.qty * curr.price, 0)
                       .toFixed(2)}
@@ -175,7 +175,7 @@ const CartScreen = () => {
                   </td>
                   <td className="px-3 font-medium border-t border-stone-400">
                     {' '}
-                    $
+                    ₩
                     {cartItems
                       .reduce((acc, curr) => acc + curr.qty * curr.price, 0)
                       .toFixed(2)}

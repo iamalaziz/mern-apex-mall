@@ -8,6 +8,19 @@ Implement
 - cra OR vite
 - remove Profile Image
 
+₩
+
+Categories
+
+Technologies
+Vegetables
+Fresh Fruit
+Clothes
+Bread & Bakery
+Meat & Fish
+Beauty & Health
+
+
 Warns & Errors
 
 - [Violation] 'loadend' handler took 3122ms [got this in productscreen]

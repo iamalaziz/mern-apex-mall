@@ -106,7 +106,7 @@ const ProductScreen = () => {
                   </div>
                 </div>
                 <h3 className="text-2xl font-medium text-green-700 py-6 border-b-[1px]">
-                  ${product.price}
+                ₩{product.price}
                 </h3>
                 <p className="text-gray-500 py-4 border-b-[1px]">
                   {product.description}

@@ -81,7 +81,7 @@ const OrderHistory = () => {
                     {order.createdAt.substring(0, 10)}
                   </td>
                   <td className="px-6 py-3 text-gray-500 border-b border-slate-400">
-                    ${order.totalPrice}
+                  ₩{order.totalPrice}
                   </td>
                   <td className="px-6 py-3 border-b text-gray-500 border-slate-400">
                     {order.isPaid
