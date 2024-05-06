@@ -39,7 +39,7 @@ const RegisterScreen = () => {
   }, [userInfo, redirect, navigate]);
 
   return (
-    <section className="mt-6 flex flex-col items-center justify-center gap-6 sm:flex-row w-[95%]">
+    <section className="my-10 flex flex-col items-center justify-center gap-6 sm:flex-row w-[95%]">
       <div className="hidden sm:block w-[40%]">
         <img src={Grandpa} alt="grandpa with basket" className="drop-shadow-2xl" />
       </div>

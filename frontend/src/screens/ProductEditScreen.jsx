@@ -110,8 +110,8 @@ const ProductEditScreen = () => {
 
   return (
     <div>
-      <Link to="/admin/productlist">Go Back</Link>
-      <h2 className="text-xl text-center">Edit Product</h2>
+      <Link to="/admin/productlist" className="p-2 border border-slate-400 rounded-xl mb-4">Go Back</Link>
+      <h2 className="text-xl text-center font-medium my-6">Edit Product</h2>
       {loadingUpdate && <Loader />}
       {errorUpdate && (
         <Message bg="border-red bg-red-200">{errorUpdate}</Message>
@@ -121,7 +121,7 @@ const ProductEditScreen = () => {
       ) : error ? (
         <Message bg="border-red bg-red-200">{error}</Message>
       ) : (
-        <form onSubmit={submitHandler} className="w-full flex flex-col gap-4">
+        <form onSubmit={submitHandler} className="w-full flex flex-col gap-4 mb-10">
           <div className="flex justify-between items-center">
             <label htmlFor="title">Product Title</label>
             <input

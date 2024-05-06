@@ -11,6 +11,8 @@ import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
+import swaggerDocs from './utils/swagger.js';
+
 dotenv.config();
 
 mongoose.set('strictQuery', true);
@@ -49,10 +51,10 @@ if(process.env.NODE_ENV === 'production') {
   });
 }
 
+const PORT = process.env.PORT || 5000;
 app.use(notFound);
 app.use(errorHandler);
-
-const PORT = process.env.PORT || 5000;
+swaggerDocs(app, PORT)
 
 app.listen(
   5000,
