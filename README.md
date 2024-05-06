@@ -8,9 +8,7 @@ The goal of this project is to provide a simple, easy-to-use prediction model th
 
 ### Tech Stack and Packages
 
-| Client  | Server  |
-|---|---|
-| JavaScript <br/> React <br/> React-Redux <br/> Bootstrap <br/> Axios <br/>  react-paypal-button-v2 <br/> react-router-dom6   | Node.js <br/> Express.js <br/> bcryptjs <br/> jsonwebtoken <br/> MongoDB   |
+![tech-icons](https://github.com/iamalaziz/mern-apex-mall/assets/81867375/c19835cb-3446-48e3-9ec2-fdc9d91f8ba9)
 
 ### Features & Components
 
@@ -31,41 +29,35 @@ The goal of this project is to provide a simple, easy-to-use prediction model th
 - Pagination
 - Slider
 
-### [Demo](http://apex-mall.onrender.com/) - Click on the Demo to checkout the website hosted on Render.
+### [Demo]() - Click on the Demo to checkout the website hosted on Render.
 
 
-
-
-
-<img width="1676" alt="Screen Shot 2023-05-30 at 3 04 07 PM" src="https://github.com/iamalaziz/mern-apex-mall/assets/81867375/8846fc89-cba7-4dde-abd3-4eee4c69679d">
+![ecobazar](https://github.com/iamalaziz/mern-apex-mall/assets/81867375/2de8e389-c35b-4f58-a320-0092d44a8bb4)
 
 <br />
 
-
-<img width="1680" alt="Screen Shot 2023-05-30 at 3 04 39 PM" src="https://github.com/iamalaziz/mern-apex-mall/assets/81867375/becf9e6a-64fe-465e-9a26-a2b17616a255">
-
-<br />
-
-<img width="1678" alt="Screen Shot 2023-05-30 at 3 04 47 PM" src="https://github.com/iamalaziz/mern-apex-mall/assets/81867375/7050a5a1-3e34-4278-bc02-68f9aaa2f11d">
+![ecobazar-2](https://github.com/iamalaziz/mern-apex-mall/assets/81867375/85de9233-e76c-4eaf-b6d7-e9c72200c5e0)
 
 <br />
 
-<img width="1680" alt="Screen Shot 2023-05-30 at 3 05 47 PM" src="https://github.com/iamalaziz/mern-apex-mall/assets/81867375/43056e78-418d-4f0a-ba39-3929d1db2263">
+![ecobazar-3](https://github.com/iamalaziz/mern-apex-mall/assets/81867375/29da9862-a0e4-4872-854c-be643856ee0f)
 
 <br />
 
-<img width="1679" alt="Screen Shot 2023-05-30 at 3 06 14 PM" src="https://github.com/iamalaziz/mern-apex-mall/assets/81867375/e6f6bdf4-cfba-479f-b574-88757834659b">
+![ecobazar-4](https://github.com/iamalaziz/mern-apex-mall/assets/81867375/a6d93df8-1dc7-4707-b25b-5d30d06dc98f)
 
 <br />
 
-
-<img width="1680" alt="Screen Shot 2023-05-30 at 3 06 47 PM" src="https://github.com/iamalaziz/mern-apex-mall/assets/81867375/5bb1f89c-fe0c-4147-aa81-ad51b228dc37">
+![ecobazar-5](https://github.com/iamalaziz/mern-apex-mall/assets/81867375/3acfc56d-a365-4a7a-9840-1767aa54817a)
 
 <br />
-<img width="1680" alt="Screen Shot 2023-05-30 at 3 08 06 PM" src="https://github.com/iamalaziz/mern-apex-mall/assets/81867375/411c5c23-b8fd-43c5-9ce0-517420f94041">
 
+![ecobazar-6](https://github.com/iamalaziz/mern-apex-mall/assets/81867375/707a5d09-9d10-4c30-b161-3d09df30943a)
 
+<br />
 
+![ecobazar-7](https://github.com/iamalaziz/mern-apex-mall/assets/81867375/fcfc15b6-6c3a-4511-b75c-573656564095)
 
+<br />
 
-
+![ecobazar-8](https://github.com/iamalaziz/mern-apex-mall/assets/81867375/5f079f35-a563-4993-85aa-7dc5c46bf5bd)
