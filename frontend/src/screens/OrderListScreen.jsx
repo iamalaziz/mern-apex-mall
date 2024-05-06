@@ -27,7 +27,7 @@ const OrderListScreen = () => {
       {loading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error}</Message>
+        <Message bg="border-red bg-red-200">{error}</Message>
       ) : (
         <Table striped bordered hover responsive className="table-sm">
           <thead>
@@ -47,7 +47,7 @@ const OrderListScreen = () => {
                   <td>{order._id}</td>
                   <td>{order.user && order.user.name}</td>
                   <td>{order.createdAt.substring(0, 10)}</td>
-                  <td>${order.totalPrice}</td>
+                  <td>₩{order.totalPrice}</td>
                   <td>
                     {order.isPaid ? (
                       order.paidAt.substring(0, 10)

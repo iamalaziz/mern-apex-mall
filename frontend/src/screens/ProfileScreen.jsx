@@ -1,162 +1,74 @@
-import React, { useState } from 'react';
-import { Table, Form, Row, Col, Button } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { getUserDetails, updateUserProfile } from '../actions/userActions';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
-import { listMyOrders } from '../actions/orderActions';
+import React from 'react';
+import { NavLink, useLocation, Outlet } from 'react-router-dom';
+
+// components
+import SVG from '../components/SVG';
+
 
 const ProfileScreen = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState(null);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      setMessage('Passwords do not match!');
-    } else {
-      dispatch(updateUserProfile({ id: user._id, name, email, password }));
-    }
-  };
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const { loading, error, user } = useSelector((state) => state.userDetails);
-  const { userInfo } = useSelector((state) => state.userLogin);
-  const { success } = useSelector((state) => state.updateProfile);
-  const {
-    loading: loadingOrders,
-    error: errorOrders,
-    orders,
-  } = useSelector((state) => state.orderMyList);
-
-  useEffect(() => {
-    if (!userInfo) {
-      navigate('/login');
-    } else {
-      if (!user.name) {
-        dispatch(getUserDetails('profile'));
-        dispatch(listMyOrders());
-      } else {
-        setName(user.name);
-        setEmail(user.email);
-      }
-    }
-  }, [dispatch, userInfo, navigate, user]);
-
+  const location = useLocation();
+  const nav = [
+    {
+      route: 'settings',
+      text: 'Account',
+      icon: 'settings',
+    },
+    {
+      route: 'order-history',
+      text: 'Order History',
+      icon: 'refresh',
+    },
+    {
+      route: 'cart',
+      text: 'Shopping Cart',
+      icon: 'cartInNav',
+    },
+    {
+      route: 'logout',
+      text: 'Logout',
+      icon: 'logout',
+    },
+  ];
   return (
-    <Row>
-      <Col md={3}>
-        <h1>User Profile</h1>
-        {message && <Message variant="danger">{message}</Message>}
-        {error && <Message variant="danger">{error}</Message>}
-        {success && <Message variant="success">Profile Updated!</Message>}
-        {loading && <Loader />}
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="name">
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type="name"
-              placeholder="Enter Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-
-          <Form.Group controlId="email">
-            <Form.Label>Email Address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-
-          <Form.Group controlId="password" className="my-3">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Enter password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-
-          <Form.Group controlId="confirmPassword" className="my-3">
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-
-          <Button type="submit" variant="primary">
-            Update
-          </Button>
-        </Form>
-      </Col>
-      <Col md={9}>
-        <h2>My Orders</h2>
-        {loadingOrders ? (
-          <Loader />
-        ) : errorOrders ? (
-          <Message variant="danger">{errorOrders}</Message>
-        ) : (
-          <Table striped bordered hover responsive className="table-sm">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>DATE</th>
-                <th>TOTAL</th>
-                <th>PAID</th>
-                <th>DELIVERED</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((order) => (
-                <tr key={order._id}>
-                  <td>{order._id}</td>
-                  <td>{order.createdAt.substring(0, 10)}</td>
-                  <td>{order.totalPrice}</td>
-                  <td>
-                    {order.isPaid ? (
-                      order.paidAt.substring(0, 10)
-                    ) : (
-                      <i className="fas fa-times" style={{ color: 'red' }}></i>
-                    )}
-                  </td>
-                  <td>
-                    {order.isDelivered ? (
-                      order.deliveredAt.substring(0, 10)
-                    ) : (
-                      <i className="fas fa-times" style={{ color: 'red' }}></i>
-                    )}
-                  </td>
-                  <td>
-                    <LinkContainer to={`/order/${order._id}`}>
-                      <Button className="btn-sm" variant="light">
-                        Details
-                      </Button>
-                    </LinkContainer>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        )}
-      </Col>
-    </Row>
+    <section className="flex w-[95%] gap-6">
+      <div className="side-nav h-[60vh] flex flex-col border rounded-lg border-slate-400 mb-2">
+        <h3 className="font-medium text-lg mb-2 p-4">Navigation</h3>
+        <ul>
+          {nav.map((route, index) => (
+            <li key={index}>
+              <NavLink
+                to={`/profile/${route.route}`}
+                className={({ isActive }) =>
+                  `${
+                    isActive
+                      ? 'text-gray-800 bg-green-100 border-l-[4px] border-green-400 flex gap-2 items-center p-4'
+                      : 'text-gray-500 flex gap-2 items-center p-4'
+                  }`
+                }
+              >
+                <SVG
+                  item={route.icon}
+                  style={{
+                    fill:
+                      location.pathname === `/profile/${route.route}`
+                        ? '#3b3a3a'
+                        : '#CCCCCC',
+                    stroke:
+                      location.pathname === `/profile/${route.route}`
+                        ? '#3b3a3a'
+                        : '#CCCCCC',
+                  }}
+                />
+                {route.text}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="flex-1">
+        <Outlet />
+      </div>
+    </section>
   );
 };
 

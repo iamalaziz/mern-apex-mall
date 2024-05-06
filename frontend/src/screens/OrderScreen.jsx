@@ -72,7 +72,6 @@ const OrderScreen = () => {
   }, [dispatch, orderId, successPay]);
 
   const successPaymentHandler = (paymentResult) => {
-    console.log(paymentResult);
     dispatch(payOrder(orderId, paymentResult));
   };
 
@@ -82,7 +81,7 @@ const OrderScreen = () => {
   return loading ? (
     <Loader />
   ) : error ? (
-    <Message variant="danger">{error}</Message>
+    <Message bg='border-red bg-red-200'>{error}</Message>
   ) : (
     <>
       <h1>Order {order._id}</h1>
@@ -107,7 +106,7 @@ const OrderScreen = () => {
               {order.isDelivered ? (
                 <Message variant="success">Delivered</Message>
               ) : (
-                <Message variant="danger">Not Delivered</Message>
+                <Message bg='border-red bg-red-200'>Not Delivered</Message>
               )}
             </ListGroup.Item>
 
@@ -122,7 +121,7 @@ const OrderScreen = () => {
                   Paid on {order.paidAt.substring(0, 10)}
                 </Message>
               ) : (
-                <Message variant="danger">Not Paid</Message>
+                <Message bg='border-red bg-red-200'>Not Paid</Message>
               )}
             </ListGroup.Item>
 
@@ -145,12 +144,12 @@ const OrderScreen = () => {
                             />
                           </Col>
                           <Col>
-                            <Link to={`/product/${item.product}`}>
+                            <Link to={`/product/${item._id}`}>
                               {item.name}
                             </Link>
                           </Col>
                           <Col md={4}>
-                            {item.qty} x ${item.price} = $
+                            {item.qty} x ₩{item.price} = ₩
                             {item.qty * item.price}
                           </Col>
                         </Row>
@@ -171,25 +170,25 @@ const OrderScreen = () => {
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
-                  <Col>${order.itemsPrice}</Col>
+                  <Col>₩{order.itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Shipping</Col>
-                  <Col>${order.shippingPrice}</Col>
+                  <Col>₩{order.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Tax</Col>
-                  <Col>${order.taxPrice}</Col>
+                  <Col>₩{order.taxPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Total</Col>
-                  <Col>${order.totalPrice}</Col>
+                  <Col>₩{order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
               {!order.isPaid && (

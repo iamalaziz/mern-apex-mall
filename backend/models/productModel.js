@@ -14,6 +14,9 @@ const reviewSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    profileImage: {
+      type: String,
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
@@ -24,6 +27,8 @@ const reviewSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+
+const ProductCategoryEnum = ['Electronics', 'Clothing', 'Books', 'Fresh Fruit', 'Vegetables', 'Beauty & Health', 'Sports', 'Bread & Bakery', 'Meat & Fish', 'Others'];
 
 const productSchema = mongoose.Schema(
   {
@@ -42,10 +47,10 @@ const productSchema = mongoose.Schema(
     },
     brand: {
       type: String,
-      required: true,
     },
     category: {
       type: String,
+      enum: ProductCategoryEnum,
       required: true,
     },
     description: {
@@ -71,6 +76,18 @@ const productSchema = mongoose.Schema(
     countInStock: {
       type: Number,
       required: true,
+      default: 0,
+    },
+    likes: {
+      type: Map,
+      of: Boolean,
+    },
+    isBestSeller: {
+      type: Boolean,
+      default: false,
+    },
+    salePrice: {
+      type: Number,
       default: 0,
     },
   },

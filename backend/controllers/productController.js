@@ -48,12 +48,12 @@ const deleteProduct = asyncHandler(async (req, res) => {
 // @access  Private/Admin
 const createProduct = asyncHandler(async (req, res) => {
   const product = new Product({
-    name: 'Sample name',
+    name: 'Enter title',
     price: 0,
     user: req.user._id,
     image: '/images/sample.jpeg',
-    brand: 'Sample brand',
-    category: 'Sample category',
+    brand: '',
+    category: 'Electronics',
     countInStock: 0,
     numReviews: 0,
     description: 'Sample description',
@@ -67,7 +67,7 @@ const createProduct = asyncHandler(async (req, res) => {
 // @route   PUT /api/products/:id
 // @access  Private/Admin
 const updateProduct = asyncHandler(async (req, res) => {
-  const { name, price, description, image, brand, category, countInStock } =
+  const { name, price, salePrice, description, image, brand, category, countInStock } =
     req.body;
 
   const product = await Product.findById(req.params.id);
@@ -75,6 +75,7 @@ const updateProduct = asyncHandler(async (req, res) => {
   if (product) {
     product.name = name;
     product.price = price;
+    product.salePrice = salePrice;
     product.description = description;
     product.image = image;
     product.brand = brand;
@@ -93,7 +94,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 // @route   POST /api/products/:id/reviews
 // @access  Private
 const createProductReview = asyncHandler(async (req, res) => {
-  const { rating, comment } = req.body;
+  const { rating, comment, profileImage } = req.body;
 
   const product = await Product.findById(req.params.id);
 
@@ -104,7 +105,7 @@ const createProductReview = asyncHandler(async (req, res) => {
 
     if (alreadyReviewed) {
       res.status(400);
-      throw new Error('Product already reviewed');
+      throw new Error('You already reviewed this product!');
     }
 
     const review = {
@@ -114,16 +115,48 @@ const createProductReview = asyncHandler(async (req, res) => {
       user: req.user._id,
     };
 
+    if (profileImage) {
+      review.profileImage = profileImage;
+    }
+
     product.reviews.push(review);
 
     product.numReviews = product.reviews.length;
-    console.log(product.reviews.length);
-    product.rating =
-      product.reviews.reduce((acc, item) => item.rating + acc, 0) /
-      product.reviews.length;
+
+    const totalRating = product.reviews.reduce((acc, item) => item.rating + acc, 0);
+    product.rating = totalRating / product.reviews.length;
 
     await product.save();
     res.status(201).json({ message: 'Review added' });
+  } else {
+    res.status(404);
+    throw new Error('Product not found');
+  }
+});
+
+
+// @desc    Update a product
+// @route   PUT /api/products/:id/like
+// @access  Private/Admin
+const likeProduct = asyncHandler(async (req, res) => {
+  const { userId } = req.body;
+  const product = await Product.findById(req.params.id);
+
+  if (product) {
+    if (!product.likes) {
+      product.likes = new Map();
+    }
+
+    const isLiked = product.likes.has(userId);
+
+    if (isLiked) {
+      product.likes.delete(userId);
+    } else {
+      product.likes.set(userId, true);
+    }
+
+    const updatedProduct = await product.save();
+    res.json(updatedProduct);
   } else {
     res.status(404);
     throw new Error('Product not found');
@@ -137,4 +170,5 @@ export {
   createProduct,
   updateProduct,
   createProductReview,
+  likeProduct,
 };

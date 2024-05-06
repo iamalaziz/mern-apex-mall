@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import FormContainer from '../components/FormContainer';
 import { getUserDetails, updateUser } from '../actions/userActions';
 import { USER_UPDATE_RESET } from '../constants/userConstants';
 import { useParams } from 'react-router-dom';
@@ -48,12 +46,15 @@ const UserEditScreen = () => {
   };
 
   return (
-    <>
-      <Link to="/admin/userlist" className="btn btn-light my-3">
+    <section className="max-w-[95%] mb-10">
+      <Link
+        to="/admin/userlist"
+        className="p-2 border border-slate-400 rounded-xl mb-4"
+      >
         Go Back
       </Link>
-      <FormContainer>
-        <h1>Edit User</h1>
+      <h2 className="text-xl text-center font-medium my-6">Edit User</h2>
+      <div className="w-full flex flex-col gap-4 mb-10">
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
@@ -61,43 +62,59 @@ const UserEditScreen = () => {
         ) : error ? (
           <Message variant="danger">{error}</Message>
         ) : (
-          <Form onSubmit={submitHandler}>
-            <Form.Group controlId="name" className='my-4'>
-              <Form.Label>Name</Form.Label>
-              <Form.Control
+          <form
+            onSubmit={submitHandler}
+            className="w-full flex flex-col gap-4 mb-10"
+          >
+            <div className="flex justify-between items-center gap-4">
+              <label htmlFor="name">Name</label>
+              <input
                 type="name"
                 placeholder="Enter name"
                 value={name}
+                id="name"
                 onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+                className="ml-auto border rounded-md p-2 w-[350px]"
+                autoComplete="off"
+              />
+            </div>
 
-            <Form.Group controlId="email" className='my-4'>
-              <Form.Label>Email Address</Form.Label>
-              <Form.Control
+            <div className="flex justify-between items-center">
+              <label htmlFor="email">Email</label>
+              <input
                 type="email"
                 placeholder="Enter email"
                 value={email}
+                id="email"
+                autoComplete="off"
                 onChange={(e) => setEmail(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+                className="ml-auto border rounded-md p-2 w-[350px]"
+              />
+            </div>
 
-            <Form.Group controlId="isadmin" className='my-4'>
-              <Form.Check
+            <div className="my-4">
+              <input
                 type="checkbox"
                 label="Is Admin"
+                id="isAdmin"
+                autoComplete="off"
                 checked={isAdmin}
                 onChange={(e) => setIsAdmin(e.target.checked)}
-              ></Form.Check>
-            </Form.Group>
+                className='mr-4'
+              />
+              <label htmlFor="isAdmin">Is this user an <strong>admin</strong>?</label>
+            </div>
 
-            <Button type="submit" variant="primary">
+            <button
+              type="submit"
+              className="ml-auto py-2 px-4 bg-green-500 rounded-full text-white"
+            >
               Update
-            </Button>
-          </Form>
+            </button>
+          </form>
         )}
-      </FormContainer>
-    </>
+      </div>
+    </section>
   );
 };
 
