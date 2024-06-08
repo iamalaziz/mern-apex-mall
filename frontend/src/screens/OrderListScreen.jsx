@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import { Table, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { listOrders } from '../actions/orderActions';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { LinkContainer } from 'react-router-bootstrap';
 
 const OrderListScreen = () => {
   const dispatch = useDispatch();
@@ -22,60 +20,61 @@ const OrderListScreen = () => {
   }, [userInfo, dispatch, navigate]);
 
   return (
-    <>
-      <h1>Orders</h1>
+    <section className="max-w-[95%] mb-10">
+       <h2 className="text-xl text-center font-medium">Orders</h2>
       {loading ? (
         <Loader />
       ) : error ? (
         <Message bg="border-red bg-red-200">{error}</Message>
       ) : (
-        <Table striped bordered hover responsive className="table-sm">
-          <thead>
+        <table className="border border-separate rounded-xl border-slate-400">
+          <thead className="uppercase bg-gray-50 text-left">
             <tr>
-              <th>ID</th>
-              <th>USER</th>
-              <th>DATE</th>
-              <th>TOTAL</th>
-              <th>PAID</th>
-              <th>DELIVERED</th>
+              <th className="px-6 py-3 font-normal text-gray-500 rounded-tl border-b border-slate-400">ID</th>
+              <th className="px-6 py-3 font-normal text-gray-700 border-b border-slate-400">USER</th>
+              <th className="px-6 py-3 font-normal text-gray-700 border-b border-slate-400">DATE</th>
+              <th className="px-6 py-3 font-normal text-gray-700 border-b border-slate-400">TOTAL</th>
+              <th className="px-6 py-3 font-normal text-gray-700 border-b border-slate-400">PAID</th>
+              <th className="px-6 py-3 font-normal text-gray-700 border-b border-slate-400">DELIVERED</th>
+              <th className="border-b border-slate-400"></th>
             </tr>
           </thead>
           <tbody>
             {orders.map((order) => {
               return (
                 <tr key={order._id}>
-                  <td>{order._id}</td>
-                  <td>{order.user && order.user.name}</td>
-                  <td>{order.createdAt.substring(0, 10)}</td>
-                  <td>₩{order.totalPrice}</td>
-                  <td>
+                  <td className="px-6 py-3 border-b border-slate-400">{order._id.substring(0, 5).toUpperCase()}</td>
+                  <td className="px-6 py-3 border-b border-slate-400">{order.user && order.user.name}</td>
+                  <td className="px-6 py-3 border-b border-slate-400">{order.createdAt.substring(0, 10)}</td>
+                  <td className="px-6 py-3 border-b border-slate-400">₩{order.totalPrice}</td>
+                  <td className="px-6 py-3 border-b border-slate-400 text-center">
                     {order.isPaid ? (
                       order.paidAt.substring(0, 10)
                     ) : (
                       <i className="fas fa-times" style={{ color: 'red' }}></i>
                     )}
                   </td>
-                  <td>
+                  <td className="px-6 py-3 border-b border-slate-400 text-center">
                     {order.isDelivered ? (
                       order.deliveredAt.substring(0, 10)
                     ) : (
                       <i className="fas fa-times" style={{ color: 'red' }}></i>
                     )}
                   </td>
-                  <td>
-                    <LinkContainer to={`/order/${order._id}`}>
-                      <Button variant="light" className="btn-sm">
+                  <td className="px-6 py-3 border-b border-slate-400">
+                    <NavLink to={`/order/${order._id}`}>
+                      <button variant="light" className="underline">
                         Details
-                      </Button>
-                    </LinkContainer>
+                      </button>
+                    </NavLink>
                   </td>
                 </tr>
               );
             })}
           </tbody>
-        </Table>
+        </table>
       )}
-    </>
+    </section>
   );
 };
 

@@ -67,7 +67,7 @@ const ProductScreen = () => {
     ((product.price - product.salePrice) / product.price) * 100
   );
   return (
-    <section className="max-w-[75%]">
+    <section className="max-w-[95%] md:max-w-[75%]">
       {loading ? (
         <Loader />
       ) : error ? (

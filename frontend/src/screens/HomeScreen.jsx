@@ -24,13 +24,12 @@ const HomeScreen = () => {
     <div className="relative w-full mx-auto pt-8 pb-10">
       <div className="absolute bg-gray-100 w-[120%] top-0 bottom-0 -z-20"></div>
       <h2 className='font-medium text-2x text-center my-10'>Introducing Our Products</h2>
-      {/* <Hero /> */}
       {loading ? (
         <Loader />
       ) : error ? (
         <Message bg='border-red bg-red-200'>{error}</Message>
       ) : (
-        <div className="grid grid-cols-2 gap-2 w-full mx-auto max-w-[80%] md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-1 w-full mx-auto max-w-[80%] md:grid-cols-3 lg:grid-cols-4">
           {products.map((product) => {
             return (
               <div key={product._id}>

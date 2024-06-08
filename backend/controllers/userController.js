@@ -70,7 +70,7 @@ export const getUserProfile = asyncHandler(async (req, res) => {
       email: user.email,
       name: user.name,
       isAdmin: user.isAdmin,
-      profileImage: user.profileImage
+      profileImage: user.profileImage,
     });
   } else {
     res.status(404);
@@ -91,8 +91,8 @@ export const updateUserProfile = asyncHandler(async (req, res) => {
     if (req.body.password) {
       user.password = req.body.password;
     }
-    if(req.body.profileImage){
-      user.profileImage = req.body.profileImage
+    if (req.body.profileImage) {
+      user.profileImage = req.body.profileImage;
     }
     const updatedUser = await user.save();
 
@@ -143,13 +143,12 @@ export const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id).select('-password');
 
   if (user) {
-    res.json(user)
+    res.json(user);
   } else {
     res.status(404);
     throw new Error('User not found');
   }
 });
-
 
 // @desc    Update User
 // @route   GET /api/users/:id
@@ -161,7 +160,7 @@ export const updateUser = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
-    user.isAdmin = req.body.isAdmin
+    user.isAdmin = req.body.isAdmin;
 
     const updatedUser = await user.save();
 
@@ -174,5 +173,33 @@ export const updateUser = asyncHandler(async (req, res) => {
   } else {
     res.status(404);
     throw new Error('User not found');
+  }
+});
+
+// Wishlist
+
+// Function to get user with wishlist
+async function getUserWithWishlist(userId) {
+  try {
+    const user = await User.findById(userId).populate('wishlist');
+    if (!user) throw new Error('User not found');
+    return user;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+// Function to add to wishlist
+export const addToWishlist = asyncHandler(async (userId, productId) => {
+  try {
+    const user = await User.findById(userId);
+    if (!user) throw new Error('User not found');
+    if (!user.wishlist.includes(productId)) {
+      user.wishlist.push(productId);
+      await user.save();
+    }
+    return user;
+  } catch (error) {
+    throw new Error(error.message);
   }
 });

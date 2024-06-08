@@ -29,6 +29,7 @@ const Product = ({ product }) => {
   const salePercent = Math.round(
     ((product.price - product.salePrice) / product.price) * 100
   );
+  
   return (
     <div className="product-container h-full border rounded-lg relative bg-white hover:border hover:border-[#00B207] hover:shadow-3xl">
       {salePercent !== 100 && (

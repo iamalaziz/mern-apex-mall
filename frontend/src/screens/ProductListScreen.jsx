@@ -109,6 +109,9 @@ const ProductListScreen = () => {
                 <th className="px-6 py-3 font-normal text-gray-700 border-b border-slate-400">
                   BRAND
                 </th>
+                <th className="px-6 py-3 font-normal text-gray-700 border-b border-slate-400">
+                  STOCK
+                </th>
                 <th className="border-b border-slate-400"></th>
               </tr>
             </thead>
@@ -129,6 +132,9 @@ const ProductListScreen = () => {
                   </td>
                   <td className="px-6 py-3 border-b border-slate-400">
                     {product.brand}
+                  </td>
+                  <td className="px-6 py-3 border-b border-slate-400">
+                    {product.countInStock}
                   </td>
                   <td className="px-6 py-3 border-b border-slate-400">
                     <div className="flex gap-2">

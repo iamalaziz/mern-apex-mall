@@ -40,7 +40,6 @@ const OrderScreen = () => {
       order.orderItems.reduce((acc, curr) => acc + +curr.qty * +curr.price, 0)
     );
   }
-
   useEffect(() => {
     if (!userInfo) {
       navigate('/login');
@@ -68,7 +67,7 @@ const OrderScreen = () => {
         setSdkReady(true);
       }
     }
-     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, orderId, successPay]);
 
   const successPaymentHandler = (paymentResult) => {
@@ -81,36 +80,49 @@ const OrderScreen = () => {
   return loading ? (
     <Loader />
   ) : error ? (
-    <Message bg='border-red bg-red-200'>{error}</Message>
+    <Message bg="border-red bg-red-200">{error}</Message>
   ) : (
-    <>
-      <h1>Order {order._id}</h1>
-      <Row>
-        <Col md={8}>
-          <ListGroup variant="flush">
-            <ListGroup.Item>
-              <h2>Shipping</h2>
-              <p>
-                <strong>Name: </strong> {order.user.name}
-              </p>
-              <p>
-                <strong>Email: </strong>{' '}
-                <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
-              </p>
-              <p>
-                <strong>Address:</strong>
-                {order.shippingAddress.address}, {order.shippingAddress.city}
-                {order.shippingAddress.postalCode},{' '}
-                {order.shippingAddress.country}
-              </p>
-              {order.isDelivered ? (
-                <Message variant="success">Delivered</Message>
-              ) : (
-                <Message bg='border-red bg-red-200'>Not Delivered</Message>
-              )}
-            </ListGroup.Item>
-
-            <ListGroup.Item>
+    <section>
+      <h2 className="text-green-500 break-after-column">
+        Order {order._id.substring(0, 5)} {'>'}{' '}
+        <span className="text-gray-800 italic">
+          {order.isDelivered
+            ? `Delivered at: ${order.deliveredAt}`
+            : 'In Progress'}
+        </span>
+      </h2>
+      <br />
+      <hr />
+      <br />
+      <div>
+        <div>
+          <div>
+            <div className="flex ">
+              <h4 className="min-w-[100px]">Shipping</h4>
+              <div className="flex flex-col gap-3">
+                <p>
+                  <span className="font-medium">Name: </span> {order.user.name}
+                </p>
+                <p>
+                  <span className="font-medium">Email: </span>{' '}
+                  <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
+                </p>
+                <p className="max-w-[60%]">
+                  <span className="font-medium">Address:</span>
+                  {order.shippingAddress.address}, {order.shippingAddress.city}
+                  {order.shippingAddress.postalCode},
+                  {order.shippingAddress.country}
+                </p>
+                {order.isDelivered ? (
+                  <Message className="text-green-500 bg-transparent border border-green-500">
+                    Delivered
+                  </Message>
+                ) : (
+                  <Message>Not Delivered</Message>
+                )}
+              </div>
+            </div>
+            <div>
               <h2>Payment Method</h2>
               <p>
                 <strong>Method: </strong>
@@ -121,9 +133,9 @@ const OrderScreen = () => {
                   Paid on {order.paidAt.substring(0, 10)}
                 </Message>
               ) : (
-                <Message bg='border-red bg-red-200'>Not Paid</Message>
+                <Message bg="border-red bg-red-200">Not Paid</Message>
               )}
-            </ListGroup.Item>
+            </div>
 
             <ListGroup.Item>
               <h2>Order Items</h2>
@@ -144,9 +156,7 @@ const OrderScreen = () => {
                             />
                           </Col>
                           <Col>
-                            <Link to={`/product/${item._id}`}>
-                              {item.name}
-                            </Link>
+                            <Link to={`/product/${item._id}`}>{item.name}</Link>
                           </Col>
                           <Col md={4}>
                             {item.qty} x ₩{item.price} = ₩
@@ -159,8 +169,8 @@ const OrderScreen = () => {
                 </ListGroup>
               )}
             </ListGroup.Item>
-          </ListGroup>
-        </Col>
+          </div>
+        </div>
         <Col md={4}>
           <Card>
             <ListGroup variant="flush">
@@ -191,7 +201,7 @@ const OrderScreen = () => {
                   <Col>₩{order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
-              {!order.isPaid && (
+              {!order.isPaid && !userInfo.isAdmin && (
                 <ListGroup.Item>
                   {loadingPay && <Loader />}
                   {!sdkReady ? (
@@ -205,22 +215,25 @@ const OrderScreen = () => {
                 </ListGroup.Item>
               )}
 
-              {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
-                <ListGroup.Item className='d-grid'>
-                  <Button
-                    type="button"
-                    onClick={deliverHandler}
-                    className="w-full btn btn-block"
-                  >
-                    Mark as Delivered
-                  </Button>
-                </ListGroup.Item>
-              )}
+              {userInfo &&
+                userInfo.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered && (
+                  <ListGroup.Item className="d-grid">
+                    <Button
+                      type="button"
+                      onClick={deliverHandler}
+                      className="w-full btn btn-block"
+                    >
+                      Mark as Delivered
+                    </Button>
+                  </ListGroup.Item>
+                )}
             </ListGroup>
           </Card>
         </Col>
-      </Row>
-    </>
+      </div>
+    </section>
   );
 };
 
