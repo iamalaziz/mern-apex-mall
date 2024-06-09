@@ -13,7 +13,7 @@ const OrderHistory = () => {
   const { userInfo } = useSelector((state) => state.userLogin);
 
   const userDetails = useSelector((state) => state.userDetails);
-  const { loading, error, user } = userDetails;
+  const { user } = userDetails;
 
   const {
     loading: loadingOrders,
@@ -81,12 +81,16 @@ const OrderHistory = () => {
                     {order.createdAt.substring(0, 10)}
                   </td>
                   <td className="px-6 py-3 text-gray-500 border-b border-slate-400">
-                  ₩{order.totalPrice}
+                    ₩{order.totalPrice}
                   </td>
                   <td className="px-6 py-3 border-b text-gray-500 border-slate-400">
-                    {order.isPaid
-                      ? order.paidAt.substring(0, 10)
-                      : 'Not completed'}
+                    {order.isPaid ? (
+                      <span className="text-green-500">
+                        {order.paidAt.substring(0, 10)}
+                      </span>
+                    ) : (
+                      'Not completed'
+                    )}
                   </td>
                   <td className="px-6 py-3 text-gray-500 border-b border-slate-400">
                     {order.isDelivered

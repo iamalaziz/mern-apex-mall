@@ -125,7 +125,7 @@ export const payOrder =
       });
     }
   };
-
+  
 export const deliverOrder = (order) => async (dispatch, getState) => {
   try {
     dispatch({
