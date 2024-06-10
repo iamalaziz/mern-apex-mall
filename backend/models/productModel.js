@@ -28,7 +28,18 @@ const reviewSchema = mongoose.Schema(
   }
 );
 
-const ProductCategoryEnum = ['Electronics', 'Clothing', 'Books', 'Fresh Fruit', 'Vegetables', 'Beauty & Health', 'Sports', 'Bread & Bakery', 'Meat & Fish', 'Others'];
+const ProductCategoryEnum = [
+  'Electronics',
+  'Clothing',
+  'Books',
+  'Fresh Fruit',
+  'Vegetables',
+  'Beauty & Health',
+  'Sports',
+  'Bread & Bakery',
+  'Meat & Fish',
+  'Others',
+];
 
 const productSchema = mongoose.Schema(
   {
@@ -81,6 +92,11 @@ const productSchema = mongoose.Schema(
     likes: {
       type: Map,
       of: Boolean,
+    },
+    likesCount: {
+      type: Number,
+      required: true,
+      default: 0,
     },
     isBestSeller: {
       type: Boolean,

@@ -8,7 +8,8 @@ import {
   registerUser,
   updateUser,
   updateUserProfile,
-  addToWishlist,
+  handleWishlist,
+  getUserWithWishlist
 } from '../controllers/userController.js';
 import { protect, admin } from '../middleWare/authMiddleware.js';
 
@@ -27,8 +28,8 @@ router
   .put(protect, admin, updateUser);
 
 // wishlist routes
-// router.get('/wishlist', protect, getUserWithWishlist);
-// router.post('/wishlist', protect, addToWishlist);
+router.get('/wishlist', protect, getUserWithWishlist);
+router.post('/wishlist', protect, handleWishlist);
 // router.delete('/wishlist/:productId', protect, removeFromWishlist);
 
 export default router;

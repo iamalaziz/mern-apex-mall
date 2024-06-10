@@ -6,20 +6,24 @@ import { useDispatch, useSelector } from 'react-redux';
 // components
 import Rating from './Rating';
 import SVG from './SVG';
+import { handleWishlist } from '../actions/userActions';
 
 const Product = ({ product }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.userLogin);
   const [isLiked, setIsLiked] = useState(false);
+  const [likesCount, setLikesCount] = useState(product.likesCount);
 
   useEffect(() => {
     setIsLiked(product.likes && userInfo && product.likes[userInfo._id]);
-  }, [product, userInfo]);
+  }, []);
 
   const handleLike = () => {
     if (userInfo) {
       dispatch(likeProduct(product._id));
+      dispatch(handleWishlist(product._id))
+      isLiked ? setLikesCount(likesCount - 1) : setLikesCount(likesCount + 1);
       setIsLiked(!isLiked);
     } else {
       navigate('/register');
@@ -29,11 +33,13 @@ const Product = ({ product }) => {
   const salePercent = Math.round(
     ((product.price - product.salePrice) / product.price) * 100
   );
-  
+
   return (
     <div className="product-container h-full border rounded-lg relative bg-white hover:border hover:border-[#00B207] hover:shadow-3xl">
       {salePercent !== 100 && (
-        <div className="sale absolute bg-red-500 text-white p-1 rounded-lg top-2 left-2">SALE {salePercent}%</div>
+        <div className="sale absolute bg-red-500 text-white p-1 rounded-lg top-2 left-2">
+          SALE {salePercent}%
+        </div>
       )}
       <button
         onClick={handleLike}
@@ -66,11 +72,7 @@ const Product = ({ product }) => {
               <Rating value={product.rating} text={`${product.numReviews}`} />
               <div className="flex items-center gap-2 text-gray-400">
                 <SVG item="like" style={{ stroke: 'red', width: '18px' }} />
-                <span>
-                  {isLiked
-                    ? product.likes && Object.keys(product.likes).length + 1
-                    : product.likes && Object.keys(product.likes).length}
-                </span>
+                <span>{likesCount}</span>
               </div>
             </div>
           </div>

@@ -179,25 +179,60 @@ export const updateUser = asyncHandler(async (req, res) => {
 // Wishlist
 
 // Function to get user with wishlist
-async function getUserWithWishlist(userId) {
+export const getUserWithWishlist = asyncHandler(async (req, res) => {
   try {
+    const userId = req.user._id;
     const user = await User.findById(userId).populate('wishlist');
-    if (!user) throw new Error('User not found');
-    return user;
+    if (!user) {
+      res.status(404);
+      throw new Error('User not found');
+    }
+    res.status(200).json({ wishlist: user.wishlist });
   } catch (error) {
-    throw new Error(error.message);
+    console.error('Error fetching user with wishlist:', error.message);
+    res.status(500).json({ message: error.message });
   }
-}
+});
 
 // Function to add to wishlist
-export const addToWishlist = asyncHandler(async (userId, productId) => {
+export const handleWishlist = asyncHandler(async (req, res) => {
+  try {
+    const userId = req.user._id; 
+    const { productId } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      res.status(404);
+      throw new Error('User not found');
+    }
+
+    if (!user.wishlist.includes(productId)) {
+      user.wishlist.push(productId);
+    } else {
+      user.wishlist = user.wishlist.filter(id => id.toString() !== productId);
+    }
+
+    await user.save();
+    const updatedUser = await User.findById(userId).populate('wishlist');
+    res.status(200).json({ wishlist: updatedUser.wishlist });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+export const removeLike = asyncHandler(async (userId, productId) => {
   try {
     const user = await User.findById(userId);
     if (!user) throw new Error('User not found');
-    if (!user.wishlist.includes(productId)) {
-      user.wishlist.push(productId);
+
+    const productIndex = user.wishlist.indexOf(productId);
+    if (productIndex !== -1) {
+      user.wishlist.splice(productIndex, 1);
       await user.save();
+    } else {
+      throw new Error('Product not in wishlist');
     }
+
     return user;
   } catch (error) {
     throw new Error(error.message);

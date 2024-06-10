@@ -23,6 +23,12 @@ import {
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_REQUEST,
   USER_UPDATE_SUCCESS,
+  FETCH_WISHLIST_REQUEST,
+  FETCH_WISHLIST_SUCCESS,
+  FETCH_WISHLIST_FAIL,
+  HANDLE_WISHLIST_REQUEST,
+  HANDLE_WISHLIST_SUCCESS,
+  HANDLE_WISHLIST_FAIL,
 } from '../constants/userConstants';
 import axios from 'axios';
 import { ORDER_LIST_MY_ORDERS_RESET } from '../constants/orderConstants';
@@ -252,3 +258,65 @@ export const updateUser = (user) => async (dispatch, getState) => {
     });
   }
 };
+
+// Fetch wishlist
+export const fetchWishlist = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: FETCH_WISHLIST_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get('/api/users/wishlist', config);
+
+    dispatch({ type: FETCH_WISHLIST_SUCCESS, payload: data.wishlist });
+    localStorage.setItem('wishlist', JSON.stringify(getState().wishlist.wishlist));
+  } catch (error) {
+    dispatch({
+      type: FETCH_WISHLIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+// Handle wishlist (add/remove)
+export const handleWishlist = (productId) => async (dispatch, getState) => {
+  try {
+    dispatch({ type: HANDLE_WISHLIST_REQUEST });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.post('/api/users/wishlist', {productId}, config);
+
+    dispatch({ type: HANDLE_WISHLIST_SUCCESS, payload: data.wishlist });
+    localStorage.setItem('wishlist', JSON.stringify(getState().wishlist.wishlist));
+  } catch (error) {
+    dispatch({
+      type: HANDLE_WISHLIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+

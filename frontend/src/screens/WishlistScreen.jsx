@@ -6,13 +6,13 @@ import { useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Product from '../components/Product';
 
-const LikeScreen = () => {
-  const { likedItems } = useSelector((state) => state.liked);
+const WishlistScreen = () => {
+  const { wishlist } = useSelector((state) => state.wishlist);
   const { userInfo } = useSelector((state) => state.userLogin);
   return (
-    <section className="max-w-[95%]">
+    <section className="max-w-[95%] mb-5">
       <h2 className="font-medium text-2x text-center my-10">My Wishlist</h2>
-      {likedItems.length === 0 || !userInfo ? (
+      {wishlist.length === 0 || !userInfo ? (
         <Message>
           Your Wishlist is empty{' '}
           <Link to="/" className="underline text-green-500">
@@ -22,7 +22,7 @@ const LikeScreen = () => {
       ) : (
         <>
           <div className="grid grid-cols-2 gap-2 w-full mx-auto max-w-[80%] md:grid-cols-3 lg:grid-cols-4">
-            {likedItems?.map((product) => {
+            {wishlist?.map((product) => {
               return (
                 <div key={product._id}>
                   <Product product={product} />
@@ -36,4 +36,4 @@ const LikeScreen = () => {
   );
 };
 
-export default LikeScreen;
+export default WishlistScreen;

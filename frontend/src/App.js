@@ -22,10 +22,9 @@ const UserEditScreen = lazy(() => import('./screens/UserEditScreen'));
 const ProductListScreen = lazy(() => import('./screens/ProductListScreen'));
 const ProductEditScreen = lazy(() => import('./screens/ProductEditScreen'));
 const OrderListScreen = lazy(() => import('./screens/OrderListScreen'));
-const LikeScreen = lazy(() => import('./screens/LikeScreen'));
+const WishlistScreen = lazy(() => import('./screens/WishlistScreen'));
 const FilterScreen = lazy(() => import('./screens/FilterScreen'));
 const NotFound = lazy(() => import('./screens/NotFound'));
-
 
 function App() {
   return (
@@ -51,7 +50,7 @@ function App() {
             </Route>
             <Route path="/product/:id" element={<ProductScreen />} />
             <Route path="/cart/:id?" element={<CartScreen />} />
-            <Route path="/favorites/:id?" element={<LikeScreen />} />
+            <Route path="/favorites/:id?" element={<WishlistScreen />} />
             <Route path="/admin/userlist" element={<UserListScreen />} />
             <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
 

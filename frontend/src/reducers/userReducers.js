@@ -24,6 +24,12 @@ import {
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
   USER_UPDATE_RESET,
+  FETCH_WISHLIST_REQUEST,
+  FETCH_WISHLIST_SUCCESS,
+  FETCH_WISHLIST_FAIL,
+  HANDLE_WISHLIST_REQUEST,
+  HANDLE_WISHLIST_SUCCESS,
+  HANDLE_WISHLIST_FAIL,
 } from '../constants/userConstants';
 
 export const userLoginReducer = (state = {}, action) => {
@@ -122,6 +128,23 @@ export const userUpdateReducer = (state = { user: {} }, action) => {
       return {
         user: {},
       };
+    default:
+      return state;
+  }
+};
+
+// wishlist reducers
+export const wishlistReducer = (state = { wishlist: [] }, action) => {
+  switch (action.type) {
+    case FETCH_WISHLIST_REQUEST:
+    case HANDLE_WISHLIST_REQUEST:
+      return { ...state, loading: true };
+    case FETCH_WISHLIST_SUCCESS:
+    case HANDLE_WISHLIST_SUCCESS:
+      return { ...state, loading: false, wishlist: action.payload };
+    case FETCH_WISHLIST_FAIL:
+    case HANDLE_WISHLIST_FAIL:
+      return { ...state, loading: false, error: action.payload };
     default:
       return state;
   }

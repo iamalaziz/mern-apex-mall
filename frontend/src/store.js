@@ -14,7 +14,6 @@ import {
   productCreateReviewReducer,
 } from './reducers/productReducers';
 import { cartReducer } from './reducers/cartReducer';
-import { likeReducer } from './reducers/likeReducer';
 import {
   userDeleteReducer,
   userDetailsReducer,
@@ -23,6 +22,7 @@ import {
   userRegisterReducer,
   userUpdateProfileReducer,
   userUpdateReducer,
+  wishlistReducer
 } from './reducers/userReducers';
 import {
   createOrderReducer,
@@ -41,7 +41,6 @@ const reducer = combineReducers({
   productUpdate: productUpdateReducer,
   productReview: productCreateReviewReducer,
   cart: cartReducer,
-  liked: likeReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
@@ -55,10 +54,15 @@ const reducer = combineReducers({
   orderDeliver: orderDeliverReducer,
   orderMyList: orderListMyReducer,
   orderList: orderListReducer,
+  wishlist: wishlistReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
   ? JSON.parse(localStorage.getItem('cartItems'))
+  : [];
+
+const wishlistFromStorage = localStorage.getItem('wishlist')
+  ? JSON.parse(localStorage.getItem('wishlist'))
   : [];
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
@@ -72,10 +76,6 @@ const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
 const paymentMethodFromStorage = localStorage.getItem('paymentMethod')
   ? JSON.parse(localStorage.getItem('paymentMethod'))
   : {};
-
-// const likedItemsFromStorage = localStorage.getItem('likedItems')
-//   ? JSON.parse(localStorage.getItem('likedItems'))
-//   : {};
 
 const initialState = {
   cart: {
