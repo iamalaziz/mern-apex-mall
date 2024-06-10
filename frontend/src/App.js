@@ -27,50 +27,78 @@ const FilterScreen = lazy(() => import('./screens/FilterScreen'));
 const NotFound = lazy(() => import('./screens/NotFound'));
 
 function App() {
-  return (
-    <Router>
-      <Header />
-      <main className="flex flex-col items-center">
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route exact path="/" element={<HomeScreen />} />
-            <Route path="*" element={<NotFound />} />
-            <Route path="/products" element={<FilterScreen />} />
-            <Route path="/register" element={<RegisterScreen />} />
-            <Route path="/login" element={<LoginScreen />} />
-            <Route path="/shipping" element={<ShippingScreen />} />
-            <Route path="/payment" element={<PaymentScreen />} />
-            <Route path="/placeorder" element={<PlaceOrderScreen />} />
-            <Route path="/order/:id" element={<OrderScreen />} />
-            <Route path="/profile/" element={<ProfileScreen />}>
-              <Route index path="settings" element={<Settings />} />
-              <Route path="order-history" element={<OrderHistory />} />
-              <Route path="cart" element={<CartScreen />} />
-              <Route path="logout" element={<LogoutModal />} />
-            </Route>
-            <Route path="/product/:id" element={<ProductScreen />} />
-            <Route path="/cart/:id?" element={<CartScreen />} />
-            <Route path="/favorites/:id?" element={<WishlistScreen />} />
-            <Route path="/admin/userlist" element={<UserListScreen />} />
-            <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
+    return (
+        <Router>
+            <Header />
+            <main className="flex flex-col items-center">
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Routes>
+                        <Route exact path="/" element={<HomeScreen />} />
+                        <Route path="*" element={<NotFound />} />
+                        <Route path="/products" element={<FilterScreen />} />
+                        <Route path="/register" element={<RegisterScreen />} />
+                        <Route path="/login" element={<LoginScreen />} />
+                        <Route path="/shipping" element={<ShippingScreen />} />
+                        <Route path="/payment" element={<PaymentScreen />} />
+                        <Route
+                            path="/placeorder"
+                            element={<PlaceOrderScreen />}
+                        />
+                        <Route path="/order/:id" element={<OrderScreen />} />
+                        <Route path="/profile/" element={<ProfileScreen />}>
+                            <Route
+                                index
+                                path="settings"
+                                element={<Settings />}
+                            />
+                            <Route
+                                path="order-history"
+                                element={<OrderHistory />}
+                            />
+                            <Route path="cart" element={<CartScreen />} />
+                            <Route path="logout" element={<LogoutModal />} />
+                        </Route>
+                        <Route
+                            path="/product/:id"
+                            element={<ProductScreen />}
+                        />
+                        <Route path="/cart/:id?" element={<CartScreen />} />
+                        <Route
+                            path="/favorites/:id?"
+                            element={<WishlistScreen />}
+                        />
+                        <Route
+                            path="/admin/userlist"
+                            element={<UserListScreen />}
+                        />
+                        <Route
+                            path="/admin/user/:id/edit"
+                            element={<UserEditScreen />}
+                        />
 
-            <Route
-              path="/admin/productlist"
-              exact
-              element={<ProductListScreen />}
-            />
-            <Route
-              path="/admin/product/:id/edit"
-              element={<ProductEditScreen />}
-            />
-            <Route path="/admin/orderlist" element={<OrderListScreen />} />
-            <Route path="/search/:keyword" element={<HomeScreen />} />
-          </Routes>
-        </Suspense>
-      </main>
-      <Footer />
-    </Router>
-  );
+                        <Route
+                            path="/admin/productlist"
+                            exact
+                            element={<ProductListScreen />}
+                        />
+                        <Route
+                            path="/admin/product/:id/edit"
+                            element={<ProductEditScreen />}
+                        />
+                        <Route
+                            path="/admin/orderlist"
+                            element={<OrderListScreen />}
+                        />
+                        <Route
+                            path="/search/:keyword"
+                            element={<HomeScreen />}
+                        />
+                    </Routes>
+                </Suspense>
+            </main>
+            <Footer />
+        </Router>
+    );
 }
 
 export default App;

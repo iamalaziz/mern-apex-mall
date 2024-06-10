@@ -8,9 +8,9 @@ import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
-    <PayPalScriptProvider deferLoading={true}>
-      <App />
-    </PayPalScriptProvider>
-  </Provider>
+    <Provider store={store}>
+        <PayPalScriptProvider deferLoading={true}>
+            <App />
+        </PayPalScriptProvider>
+    </Provider>,
 );

@@ -2,14 +2,10 @@
 
 // components
 
-import React from 'react'
+import React from 'react';
 
 const FilterScreen = () => {
-  return (
-    <section className="w-[95%]">
-        Filter Screen
-    </section>
-  )
-}
+    return <section className="w-[95%]">Filter Screen</section>;
+};
 
-export default FilterScreen
+export default FilterScreen;

@@ -6,48 +6,48 @@
 
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: 'Poppins';
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins';
 }
 
 * {
-  box-sizing: border-box;
-  /* outline: 1px solid red; */
+    box-sizing: border-box;
+    /* outline: 1px solid red; */
 }
 #root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow: hidden;
 }
 
 h2 {
-  @apply text-2xl;
+    @apply text-2xl;
 }
 img {
-  max-width: 100%;
-  display: block;
+    max-width: 100%;
+    display: block;
 }
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 a:hover {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 img {
-  max-width: 100%;
-  display: block;
+    max-width: 100%;
+    display: block;
 }
 
 .card-cart:hover svg path {
-  stroke: white !important;
+    stroke: white !important;
 }
 .product-container:hover .card-cart {
-  background-color: #00b207;
+    background-color: #00b207;
 }
 .product-container:hover .card-cart svg path {
-  stroke: #fff;
+    stroke: #fff;
 }

@@ -1,11 +1,11 @@
 import express from 'express';
 import {
-  addOrderItems,
-  getOrderById,
-  updateOrderToPaid,
-  getMyOrders,
-  getOrders,
-  updateOrderToDelivered,
+    addOrderItems,
+    getOrderById,
+    updateOrderToPaid,
+    getMyOrders,
+    getOrders,
+    updateOrderToDelivered,
 } from '../controllers/orderController.js';
 import { protect, admin } from '../middleWare/authMiddleware.js';
 
