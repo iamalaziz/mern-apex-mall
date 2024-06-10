@@ -1,32 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { likeProduct } from '../actions/productActions';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+// redux
 import { useDispatch, useSelector } from 'react-redux';
+import { likeProduct } from '../actions/productActions';
+import { handleWishlist } from '../actions/userActions';
 
 // components
 import Rating from './Rating';
 import SVG from './SVG';
-import { handleWishlist } from '../actions/userActions';
 
 const Product = ({ product }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const { userInfo } = useSelector((state) => state.userLogin);
   const [isLiked, setIsLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(product.likesCount);
+  const [animationClass, setAnimationClass] = useState('');
 
   useEffect(() => {
     setIsLiked(product.likes && userInfo && product.likes[userInfo._id]);
   }, []);
 
   const handleLike = () => {
-    if (userInfo) {
-      dispatch(likeProduct(product._id));
-      dispatch(handleWishlist(product._id))
-      isLiked ? setLikesCount(likesCount - 1) : setLikesCount(likesCount + 1);
-      setIsLiked(!isLiked);
+    if (location.pathname === '/favorites') {
+      setAnimationClass('animate-remove');
+      setTimeout(() => {
+        dispatch(likeProduct(product._id));
+        dispatch(handleWishlist(product._id));
+        isLiked ? setLikesCount(likesCount - 1) : setLikesCount(likesCount + 1);
+        setIsLiked(!isLiked);
+        setAnimationClass('');
+      }, 300);
     } else {
-      navigate('/register');
+      if (userInfo) {
+        dispatch(likeProduct(product._id));
+        dispatch(handleWishlist(product._id));
+        isLiked ? setLikesCount(likesCount - 1) : setLikesCount(likesCount + 1);
+        setIsLiked(!isLiked);
+      } else {
+        navigate('/register');
+      }
     }
   };
 
@@ -35,7 +49,9 @@ const Product = ({ product }) => {
   );
 
   return (
-    <div className="product-container h-full border rounded-lg relative bg-white hover:border hover:border-[#00B207] hover:shadow-3xl">
+    <div
+      className={`product-container h-full border rounded-lg relative bg-white hover:border hover:border-[#00B207] hover:shadow-3xl ${animationClass}`}
+    >
       {salePercent !== 100 && (
         <div className="sale absolute bg-red-500 text-white p-1 rounded-lg top-2 left-2">
           SALE {salePercent}%

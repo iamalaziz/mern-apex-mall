@@ -1,48 +1,48 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import Rating from '../components/Rating';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+
+// redux
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../actions/cartActions';
+import { handleWishlist } from '../actions/userActions';
+import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants';
 import {
   createProductReview,
   listProductDetails,
   likeProduct,
 } from '../actions/productActions';
-import { addToCart } from '../actions/cartActions';
-import { useDispatch, useSelector } from 'react-redux';
+
+// components
+import SVG from '../components/SVG';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants';
+import Rating from '../components/Rating';
+// icons
 import { Profile } from '../assets';
-import SVG from '../components/SVG';
 
 const ProductScreen = () => {
-  const [qty, setQty] = useState(1);
-  const [rating, setRating] = useState('');
-  const [comment, setComment] = useState('');
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const { id: currentProductId } = useParams();
-
+  /* REDUX DATA FETCH */
   const { userInfo } = useSelector((state) => state.userLogin);
   const { loading, error, product } = useSelector(
     (state) => state.productDetails
   );
-
-  const isLiked = product.likes && userInfo && product.likes[userInfo._id];
-
-  const addToCartHandler = () => {
-    if (userInfo) {
-      dispatch(addToCart(product._id, qty));
-      navigate('/cart');
-    } else {
-      navigate('/login');
-    }
-  };
-
   const { success: successProductReview, error: errorProductReview } =
     useSelector((state) => state.productReview);
+
+  /* LOCAL STATES */
+  const [qty, setQty] = useState(1);
+  const [rating, setRating] = useState('');
+  const [comment, setComment] = useState('');
+  const [isLiked, setIsLiked] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { id: currentProductId } = useParams();
+  
+  useEffect(() => {
+    if (product && userInfo) {
+      setIsLiked(product.likes && product.likes[userInfo._id] === true);
+    }
+  }, [product, userInfo]);
 
   useEffect(() => {
     if (successProductReview) {
@@ -54,15 +54,33 @@ const ProductScreen = () => {
     dispatch(listProductDetails(currentProductId));
   }, [dispatch, currentProductId, successProductReview]);
 
-  function submitHandler(e) {
+  const submitHandler = (e) => {
     e.preventDefault();
     const reviewData = { rating, comment };
-    if(userInfo && userInfo.profileImage) {
+    if (userInfo && userInfo.profileImage) {
       reviewData.profileImage = userInfo.profileImage;
     }
     dispatch(createProductReview(currentProductId, reviewData));
-  }
+  };
 
+  const addToCartHandler = () => {
+    if (userInfo) {
+      dispatch(addToCart(product._id, qty));
+      navigate('/cart');
+    } else {
+      navigate('/login');
+    }
+  };
+
+  const handleLike = () => {
+    if (userInfo) {
+      dispatch(likeProduct(product._id));
+      dispatch(handleWishlist(product._id));
+      setIsLiked(!isLiked);
+    } else {
+      navigate('/register');
+    }
+  };
   const salePercent = Math.round(
     ((product.price - product.salePrice) / product.price) * 100
   );
@@ -107,9 +125,7 @@ const ProductScreen = () => {
                   ·
                   <div className="flex items-center gap-2 text-gray-400">
                     <SVG item="like" style={{ stroke: 'red', width: '18px' }} />
-                    <span>
-                      {product.likes && Object.keys(product.likes).length} likes
-                    </span>
+                    <span>{product.likesCount} likes</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-2 border-b-[1px]">
@@ -172,7 +188,7 @@ const ProductScreen = () => {
                     </span>
                   </button>
                   <button
-                    onClick={() => dispatch(likeProduct(product._id))}
+                    onClick={handleLike}
                     className="h-10 w-10 bg-green-100 rounded-full flex items-center justify-center cursor-pointer"
                   >
                     {isLiked ? (

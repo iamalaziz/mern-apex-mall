@@ -84,6 +84,7 @@ const initialState = {
     paymentMethod: paymentMethodFromStorage,
   },
   userLogin: { userInfo: userInfoFromStorage },
+  wishlist: { wishlist: wishlistFromStorage },
 };
 
 const middleware = [thunk];
