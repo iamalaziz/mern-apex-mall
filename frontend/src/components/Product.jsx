@@ -63,13 +63,10 @@ const Product = ({ product }) => {
             )}
             <button
                 onClick={handleLike}
-                className="absolute top-2 right-2 border border-gray-400 rounded-full w-10 h-10 flex items-center justify-center cursor-pointer hover:bg-white"
+                className="absolute top-2 right-2 rounded-full w-10 h-10 flex items-center justify-center cursor-pointer bg-white"
             >
                 {isLiked ? (
-                    <SVG
-                        item="like"
-                        style={{ width: '20px', fill: 'red', stroke: 'red' }}
-                    />
+                    <SVG item="like" style={{ width: '20px', fill: 'red' }} />
                 ) : (
                     <SVG item="like" style={{ width: '20px' }} />
                 )}

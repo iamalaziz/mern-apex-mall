@@ -27,7 +27,7 @@ export default function Navbar() {
                     Home
                     <SVG item="chevron-down" />
                 </NavLink>
-                {userInfo.isAdmin && (
+                {userInfo?.isAdmin && (
                     <>
                         <NavLink
                             to="/admin/userlist"

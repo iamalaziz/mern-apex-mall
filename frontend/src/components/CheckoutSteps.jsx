@@ -1,47 +1,31 @@
-import React from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
-import { Nav } from 'react-bootstrap';
+import { NavLink, useLocation } from 'react-router-dom';
 
-const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
+const CheckoutSteps = ({ steps }) => {
+    const location = useLocation();
+    const stepLabels = ['Sign In', 'Shipping', 'Payment', 'Place Order'];
+    const stepLinks = ['/login', '/shipping', '/payment', '/placeorder'];
+
     return (
-        <Nav className="justify-content-center mb-4">
-            <Nav.Item>
-                {step1 ? (
-                    <LinkContainer to="/login">
-                        <Nav.Link>Sign In</Nav.Link>
-                    </LinkContainer>
-                ) : (
-                    <Nav.Link disabled>Sign In</Nav.Link>
-                )}
-            </Nav.Item>
-            <Nav.Item>
-                {step2 ? (
-                    <LinkContainer to="/shipping">
-                        <Nav.Link>Shipping</Nav.Link>
-                    </LinkContainer>
-                ) : (
-                    <Nav.Link disabled>Shipping</Nav.Link>
-                )}
-            </Nav.Item>
-            <Nav.Item>
-                {step3 ? (
-                    <LinkContainer to="/payment">
-                        <Nav.Link>Payment</Nav.Link>
-                    </LinkContainer>
-                ) : (
-                    <Nav.Link disabled>Payment</Nav.Link>
-                )}
-            </Nav.Item>
-            <Nav.Item>
-                {step4 ? (
-                    <LinkContainer to="/placeorder">
-                        <Nav.Link>Place Order</Nav.Link>
-                    </LinkContainer>
-                ) : (
-                    <Nav.Link disabled>Place Order</Nav.Link>
-                )}
-            </Nav.Item>
-        </Nav>
+        <nav className="flex justify-between mb-6">
+            {stepLabels.map((label, index) => (
+                <li key={index} className="list-none">
+                    {steps[index] ? (
+                        <NavLink
+                            to={stepLinks[index]}
+                            className={`${
+                                location.pathname === stepLinks[index]
+                                    ? 'text-green-600'
+                                    : 'text-gray-300'
+                            } hover:text-green-600`}
+                        >
+                            {label}
+                        </NavLink>
+                    ) : (
+                        <span className="text-gray-300">{label}</span>
+                    )}
+                </li>
+            ))}
+        </nav>
     );
 };
 

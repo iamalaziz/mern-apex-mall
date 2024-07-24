@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Col, Row, ListGroup, Image, Card, Button } from 'react-bootstrap';
+import { Col, Row, ListGroup, Card, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import CheckoutSteps from '../components/CheckoutSteps';
 import Message from '../components/Message';
@@ -49,8 +49,8 @@ const PlaceOrderScreen = () => {
     };
 
     return (
-        <>
-            <CheckoutSteps step1 step2 step3 step4 />
+        <section className="min-w-[95%] md:min-w-[60%] my-4">
+            <CheckoutSteps steps={[true, true, true, true]} />
             <Row>
                 <Col md={8}>
                     <ListGroup variant="flush">
@@ -78,36 +78,56 @@ const PlaceOrderScreen = () => {
                             {cart.cartItems.length === 0 ? (
                                 <Message>Your cart is empty!</Message>
                             ) : (
-                                <ListGroup variant="flush" className="mx-4">
-                                    {cart.cartItems.map((item, index) => {
-                                        return (
-                                            <ListGroup.Item key={index}>
-                                                <Row>
-                                                    <Col md={1}>
-                                                        <Image
-                                                            src={item.image}
-                                                            alt={item.name}
-                                                            fluid
-                                                            rounded
-                                                        />
-                                                    </Col>
-                                                    <Col>
-                                                        <Link
-                                                            to={`/product/${item._id}`}
-                                                        >
-                                                            {item.name}
-                                                        </Link>
-                                                    </Col>
-                                                    <Col md={4}>
-                                                        {item.qty} x ₩
-                                                        {item.price} = ₩
-                                                        {item.qty * item.price}
-                                                    </Col>
-                                                </Row>
-                                            </ListGroup.Item>
-                                        );
-                                    })}
-                                </ListGroup>
+                                <table className="border border-separate rounded-xl border-slate-400">
+                                    <thead className="uppercase bg-gray-50 text-left">
+                                        <tr>
+                                            <th className="px-6 py-3 font-normal text-gray-500 rounded-tl border-b border-slate-400">
+                                                Image
+                                            </th>
+                                            <th className="px-6 py-3 font-normal text-gray-700 border-b border-slate-400">
+                                                Product
+                                            </th>
+                                            <th className="px-6 py-3 font-normal text-gray-700 border-b border-slate-400">
+                                                Price
+                                            </th>
+                                            <th
+                                                colSpan="2"
+                                                className="px-6 py-3 font-normal text-gray-700 rounded-tr border-b border-slate-400"
+                                            >
+                                                Subtotal
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {cart.cartItems.map((item, index) => (
+                                            <tr key={item._id} className="p-2">
+                                                <td className="px-6 py-3 border-b border-slate-400">
+                                                    <img
+                                                        src={item.image}
+                                                        alt={item.name}
+                                                        className="w-[80px]"
+                                                    />
+                                                </td>
+                                                <td className="px-6 py-3 font-medium text-gray-700 border-b border-slate-400">
+                                                    <Link
+                                                        to={`/product/${item._id}`}
+                                                    >
+                                                        {item.name}
+                                                    </Link>
+                                                </td>
+                                                <td className="px-6 py-3 text-gray-500 border-b border-slate-400">
+                                                    ₩{item.price}
+                                                </td>
+                                                <td className="px-6 py-3 text-gray-500 border-b border-slate-400">
+                                                    ₩
+                                                    {(
+                                                        item.price * item.qty
+                                                    ).toFixed(2)}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
                             )}
                         </ListGroup.Item>
                     </ListGroup>
@@ -150,20 +170,20 @@ const PlaceOrderScreen = () => {
                                 )}
                             </ListGroup.Item>
                             <ListGroup.Item>
-                                <Button
+                                <button
                                     type="button"
-                                    className="w-100"
                                     disabled={cart.cartItems.length === 0}
                                     onClick={placeOrderHandler}
+                                    className="py-2 px-4 float-right bg-green-500 text-white rounded-md"
                                 >
                                     Place Order
-                                </Button>
+                                </button>
                             </ListGroup.Item>
                         </ListGroup>
                     </Card>
                 </Col>
             </Row>
-        </>
+        </section>
     );
 };
 

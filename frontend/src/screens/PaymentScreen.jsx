@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Form, Button, Col } from 'react-bootstrap';
-import FormContainer from '../components/FormContainer';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import CheckoutSteps from '../components/CheckoutSteps';
@@ -22,10 +21,9 @@ const PaymentScreen = () => {
     };
 
     return (
-        <FormContainer>
-            <CheckoutSteps step1 step2 step3 />
-            <h1>Payment Method</h1>
-            <Form onSubmit={submitHandler}>
+        <section className="min-w-[95%] md:min-w-[60%]">
+            <CheckoutSteps steps={[true, true, true, false]} />
+            <form onSubmit={submitHandler}>
                 <Form.Group>
                     <Form.Label as="legend">Select Method</Form.Label>
                     <Col className="mx-3 my-4">
@@ -48,9 +46,14 @@ const PaymentScreen = () => {
                         ></Form.Check>
                     </Col>
                 </Form.Group>
-                <Button type="submit">Continue</Button>
-            </Form>
-        </FormContainer>
+                <button
+                    type="submit"
+                    className="py-2 px-4 float-right bg-green-500 text-white rounded-md"
+                >
+                    Continue
+                </button>
+            </form>
+        </section>
     );
 };
 

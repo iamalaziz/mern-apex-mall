@@ -24,7 +24,7 @@ const HomeScreen = () => {
         <div className="relative w-full mx-auto pt-8 pb-10">
             <div className="absolute bg-gray-100 w-[120%] top-0 bottom-0 -z-20"></div>
             <h2 className="font-medium text-2x text-center my-10">
-                Introducing Our Products
+                Latest Products
             </h2>
             {loading ? (
                 <Loader />
